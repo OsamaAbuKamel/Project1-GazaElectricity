@@ -1,0 +1,21 @@
+
+Y
+java:S6208I"CMerge the previous cases into this one using comma-separated label.(úŽâð
+^
+java:S6208P"CMerge the previous cases into this one using comma-separated label.(—Í×©øÿÿÿÿ
+P
+java:S6213":Rename this variable to not match a restricted identifier.(ƒ¼ŸÛ
+U
+java:S6213":Rename this variable to not match a restricted identifier.(µê§ðøÿÿÿÿ
+V	java:S125"<This block of commented-out lines of code should be removed.(ú»Ãªüÿÿÿÿ
+E
+java:S1197("*Move the array designators [] to the type.(•üÉûÿÿÿÿ
+E	java:S106+"+Replace this use of System.out by a logger.(Âµßœûÿÿÿÿ
+U
+java:S6213,":Rename this variable to not match a restricted identifier.(ðô®—üÿÿÿÿ
+E	java:S1062"+Replace this use of System.out by a logger.(©þêÜúÿÿÿÿ
+E	java:S106;"+Replace this use of System.out by a logger.(©þêÜúÿÿÿÿ
+?	java:S106`"+Replace this use of System.out by a logger.(ãÊäH
+U
+java:S6213":Rename this variable to not match a restricted identifier.(ð•ñÝüÿÿÿÿ
+W	java:S125Š"<This block of commented-out lines of code should be removed.(µ‹°æùÿÿÿÿ
