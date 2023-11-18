@@ -9,7 +9,5 @@ k
 ;src/main/java/com/example/project1gazaelectricity/Main.java,6\5\65667be95c3d4f643bd7c392f007d70b2780ae70
 r
 Bsrc/main/java/com/example/project1gazaelectricity/SLinkedList.java,4\f\4f2c42d66bdfa58348c60e8e44c76edbc8a7b54c
-r
-Bsrc/main/java/com/example/project1gazaelectricity/RecordList1.java,1\7\17857cb703657d1062a206c0b12036e8f7ae98aa
 k
 ;src/main/java/com/example/project1gazaelectricity/Node.java,2\8\2849eb4ef19ca1ab4115de813daeac13b064b179

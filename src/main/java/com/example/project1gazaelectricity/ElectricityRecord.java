@@ -7,6 +7,7 @@ public class ElectricityRecord implements Comparable<ElectricityRecord> {
     private double gazaPowerPlant;
     // Represents the electricity supply from Egyptian lines
     private double egyptianLines;
+    // Represents the total electricity supply
     private double totalSupply;
     // Represents the overall electricity demand
     private double overallDemand;
@@ -95,10 +96,10 @@ public class ElectricityRecord implements Comparable<ElectricityRecord> {
     }
 
     public void setPowerCutsHoursDay(double powerCutsHoursDay) {
-        if (powerCutsHoursDay >= 0)
+        if (powerCutsHoursDay >= 0 && powerCutsHoursDay <= 24)
             this.powerCutsHoursDay = powerCutsHoursDay;
         else
-            throw new IllegalArgumentException("Power Cuts hours day cannot be negative");
+            throw new IllegalArgumentException("Power Cuts Hours cannot be negative or greater than 24");
     }
 
     public double getTemp() {
@@ -106,10 +107,10 @@ public class ElectricityRecord implements Comparable<ElectricityRecord> {
     }
 
     public void setTemp(double temp) {
-        if (temp >= 0)
+        if (temp <=50)
             this.temp = temp;
         else
-            throw new IllegalArgumentException("Temperature cannot be negative");
+            throw new IllegalArgumentException("Temperature cannot be greater than 50");
     }
 
     public String toString() {

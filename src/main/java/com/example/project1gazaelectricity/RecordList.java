@@ -13,32 +13,66 @@ public class RecordList {
     }
 
     public void add(String date, ElectricityRecord record) {
+        int[] partsOfDate = parseDate(date);
+        validateDate(partsOfDate[0], partsOfDate[1], partsOfDate[2]);
+        SLinkedList<SLinkedList<ElectricityRecord>> yearList = getOrCreateYearList(partsOfDate[0]);
+        SLinkedList<ElectricityRecord> monthList = getOrCreateMonthList(yearList, partsOfDate[1]);
+        ElectricityRecord dayRecord = getOrCreateDayRecord(monthList, partsOfDate[2]);
+        updateRecord(dayRecord, record);
+    }
+
+    public void remove(String date, ElectricityRecord record) {
+        int[] partsOfDate = parseDate(date);
+        validateDate(partsOfDate[0], partsOfDate[1], partsOfDate[2]);
+        SLinkedList<ElectricityRecord> monthList = records.get(partsOfDate[0]).get(partsOfDate[1]);
+        if (record == null) {
+            throw new IllegalArgumentException("Record cannot be null");
+        } else if (search(date) != null) {
+            monthList.deleteSorted(record);
+        }
+    }
+
+    public void update(String date, ElectricityRecord newRecord) {
+        ElectricityRecord record = search(date);
+        if (record != null) {
+            record.setIsraeliLines(newRecord.getIsraeliLines());
+            record.setGazaPowerPlant(newRecord.getGazaPowerPlant());
+            record.setEgyptianLines(newRecord.getEgyptianLines());
+            record.setTotalSupply(newRecord.getTotalSupply());
+            record.setOverallDemand(newRecord.getOverallDemand());
+            record.setPowerCutsHoursDay(newRecord.getPowerCutsHoursDay());
+            record.setTemp(newRecord.getTemp());
+        }
+    }
+
+    public ElectricityRecord search(String date) {
+        int[] partsOfDate = parseDate(date);
+        if (records.length() > partsOfDate[0]) {
+            SLinkedList<ElectricityRecord> monthList = records.get(partsOfDate[0]).get(partsOfDate[1]);
+            if (monthList != null && monthList.length() > partsOfDate[2]) {
+                return monthList.get(partsOfDate[2]);
+            }
+        }
+        return null;
+    }
+
+    private int[] parseDate(String date) {
         String[] dateParts = date.split("[-/]");
         int year = Integer.parseInt(dateParts[0]);
         int month = Integer.parseInt(dateParts[1]);
         int day = Integer.parseInt(dateParts[2]);
         validateDate(year, month, day);
-        SLinkedList<SLinkedList<ElectricityRecord>> yearList = ensureYearExists(year);
-        SLinkedList<ElectricityRecord> monthList = ensureMonthExists(yearList, month);
-        ElectricityRecord dayRecord = ensureDayExists(monthList, day);
-        updateRecord(dayRecord, record);
+        return new int[] { year, month, day };
     }
-    public int[] splitDate(String date) {
-        String[] parts = date.split("[-/]");
-        int year = Integer.parseInt(parts[0]);
-        int month = Integer.parseInt(parts[1]);
-        int day = Integer.parseInt(parts[2]);
-    
-        return new int[]{year, month, day};
-      }
-    private SLinkedList<SLinkedList<ElectricityRecord>> ensureYearExists(int year) {
+
+    private SLinkedList<SLinkedList<ElectricityRecord>> getOrCreateYearList(int year) {
         while (records.length() <= year) {
             records.insertAtLast(new SLinkedList<>());
         }
         return records.get(year);
     }
 
-    private SLinkedList<ElectricityRecord> ensureMonthExists(SLinkedList<SLinkedList<ElectricityRecord>> yearList,
+    private SLinkedList<ElectricityRecord> getOrCreateMonthList(SLinkedList<SLinkedList<ElectricityRecord>> yearList,
             int month) {
         while (yearList.length() <= month) {
             yearList.insertAtLast(new SLinkedList<>());
@@ -46,7 +80,7 @@ public class RecordList {
         return yearList.get(month);
     }
 
-    private ElectricityRecord ensureDayExists(SLinkedList<ElectricityRecord> monthList, int day) {
+    private ElectricityRecord getOrCreateDayRecord(SLinkedList<ElectricityRecord> monthList, int day) {
         while (monthList.length() <= day) {
             monthList.insertAtLast(new ElectricityRecord());
         }
@@ -105,15 +139,6 @@ public class RecordList {
 
     private static boolean isLeapYear(int year) {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-    }
-
-    public void remove(int year, int month, int day, ElectricityRecord record) {
-        if (record == null) {
-            throw new NullPointerException("Record cannot be null");
-        }
-        validateDate(year, month, day);
-        SLinkedList<ElectricityRecord> monthList = records.get(year).get(month);
-        monthList.deleteSorted(record);
     }
 
     public void print() {
@@ -201,16 +226,38 @@ public class RecordList {
                 "}";
     }
 
+    public void printDataStructureWithData() {
+        for (int year = 1; year < records.length(); year++) {
+            System.out.println("Year " + year);
+            SLinkedList<SLinkedList<ElectricityRecord>> yearList = records.get(year);
+            for (int month = 1; month < yearList.length(); month++) {
+                System.out.println("\tMonth " + month);
+                SLinkedList<ElectricityRecord> monthList = yearList.get(month);
+                for (int day = 1; day < monthList.length(); day++) {
+                    System.out.println("\t\tDay " + day);
+                    ElectricityRecord dayRecord = monthList.get(day);
+                    System.out.println("\t\t\tData: " + dayRecord.toString());
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
         RecordList test = new RecordList();
         // Add some sample electricity records for testing
         ElectricityRecord record = new ElectricityRecord(10.0, 5.0, 8.0, 20.0, 15.0, 2.5, 25.0);
         ElectricityRecord record2 = new ElectricityRecord(12.0, 6.0, 9.0, 22.0, 18.0, 3.0, 26.0);
-        ElectricityRecord record3 = new ElectricityRecord(12.0, 6.0, 9.0, 22.0, 18.0, 3.0, 26.0);
+        ElectricityRecord record3 = new ElectricityRecord(74.0, 06.0, 10.0, 2.0, 1.0, 3.0, 5.0);
         test.add("2023-10-01", record);
         test.add("2023-10-02", record2);
-        test.add("2023-11-30", record3);
+        test.add("2023-10-03", record3);
         test.print();
+        // test.printDataStructureWithData();
+        System.out.println("---------------------------");
+        test.remove("2023-10-03", record3);
+        test.print();
+        // test.printDataStructureWithData();
+        // System.out.println(test.search("2023-10-02"));
         // test.remove(2023, 10, 3, record3);
         // test.print();
         // String file =
