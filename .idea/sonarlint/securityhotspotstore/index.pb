@@ -1,12 +1,6 @@
 
-w
-Gsrc/main/java/com/example/project1gazaelectricity/HelloApplication.java,0\8\08e4cfdaca0269e1c1d898a801f4ccd49f7ce799
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-v
-Fsrc/main/resources/com/example/project1gazaelectricity/hello-view.fxml,3\c\3c63b2ac3d3a775e65438258bf2474ba284e9e20
-v
-Fsrc/main/java/com/example/project1gazaelectricity/HelloController.java,0\e\0e994e68c46fb4444a182a7ed7b0717341df785c
 u
 Esrc/main/java/com/example/project1gazaelectricity/DateManagement.java,e\8\e806d1ffa600f5fb2256ceddcbd958a89ee8cfae
 x

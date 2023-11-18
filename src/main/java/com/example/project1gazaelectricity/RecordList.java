@@ -7,20 +7,30 @@ import java.util.Scanner;
 
 public class RecordList {
     private SLinkedList<SLinkedList<SLinkedList<ElectricityRecord>>> records;
-    
 
     public RecordList() {
         records = new SLinkedList<>();
     }
 
-    public void add(int year, int month, int day, ElectricityRecord record) {
-        isValid(year, month, day);
+    public void add(String date, ElectricityRecord record) {
+        String[] dateParts = date.split("[-/]");
+        int year = Integer.parseInt(dateParts[0]);
+        int month = Integer.parseInt(dateParts[1]);
+        int day = Integer.parseInt(dateParts[2]);
+        validateDate(year, month, day);
         SLinkedList<SLinkedList<ElectricityRecord>> yearList = ensureYearExists(year);
         SLinkedList<ElectricityRecord> monthList = ensureMonthExists(yearList, month);
         ElectricityRecord dayRecord = ensureDayExists(monthList, day);
         updateRecord(dayRecord, record);
     }
-
+    public int[] splitDate(String date) {
+        String[] parts = date.split("[-/]");
+        int year = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+        int day = Integer.parseInt(parts[2]);
+    
+        return new int[]{year, month, day};
+      }
     private SLinkedList<SLinkedList<ElectricityRecord>> ensureYearExists(int year) {
         while (records.length() <= year) {
             records.insertAtLast(new SLinkedList<>());
@@ -54,7 +64,7 @@ public class RecordList {
     }
 
     // Check if the provided date is valid
-    private void isValid(int year, int month, int day) {
+    private void validateDate(int year, int month, int day) {
         if (year < 0) {
             throw new IllegalArgumentException("Year cannot be negative");
         }
@@ -97,14 +107,15 @@ public class RecordList {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
 
-    public void remove(int year,int month,int day,ElectricityRecord record){
+    public void remove(int year, int month, int day, ElectricityRecord record) {
         if (record == null) {
-            throw new NullPointerException("Record cannot be null");   
+            throw new NullPointerException("Record cannot be null");
         }
-        isValid(year, month, day);
+        validateDate(year, month, day);
         SLinkedList<ElectricityRecord> monthList = records.get(year).get(month);
         monthList.deleteSorted(record);
     }
+
     public void print() {
         for (int year = 1; year < records.length(); year++) {
             SLinkedList<SLinkedList<ElectricityRecord>> yearList = records.get(year);
@@ -146,11 +157,11 @@ public class RecordList {
                 line = scanner.nextLine();
                 String parts[] = line.split(",");
                 String date = parts[0];
-                String[] s = date.split("[/-]");
+                // String[] s = date.split("[/-]");
                 ElectricityRecord record = new ElectricityRecord(Double.parseDouble(parts[1]),
                         Double.parseDouble(parts[2]), Double.parseDouble(parts[3]), Double.parseDouble(parts[4]),
                         Double.parseDouble(parts[5]), Double.parseDouble(parts[6]), Double.parseDouble(parts[7]));
-                add(Integer.parseInt(s[0]), Integer.parseInt(s[1]), Integer.parseInt(s[2]), record);
+                add(date, record);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -194,17 +205,18 @@ public class RecordList {
         RecordList test = new RecordList();
         // Add some sample electricity records for testing
         ElectricityRecord record = new ElectricityRecord(10.0, 5.0, 8.0, 20.0, 15.0, 2.5, 25.0);
-        ElectricityRecord record2 =  new ElectricityRecord(12.0, 6.0, 9.0, 22.0, 18.0, 3.0, 26.0);
+        ElectricityRecord record2 = new ElectricityRecord(12.0, 6.0, 9.0, 22.0, 18.0, 3.0, 26.0);
         ElectricityRecord record3 = new ElectricityRecord(12.0, 6.0, 9.0, 22.0, 18.0, 3.0, 26.0);
-
-        test.add(2023, 10, 1,record );
-        test.add(2023, 10, 2,record2);
-        test.add(2023, 10, 3,record3);
+        test.add("2023-10-01", record);
+        test.add("2023-10-02", record2);
+        test.add("2023-11-30", record3);
         test.print();
-        test.remove(2023, 10, 3, record3);
-        test.print();
-        // String file = "src\\main\\resources\\com\\example\\project1gazaelectricity\\data.txt";
-        // String file1 = "src\\main\\resources\\com\\example\\project1gazaelectricity\\Electricity.csv";
+        // test.remove(2023, 10, 3, record3);
+        // test.print();
+        // String file =
+        // "src\\main\\resources\\com\\example\\project1gazaelectricity\\data.txt";
+        // String file1 =
+        // "src\\main\\resources\\com\\example\\project1gazaelectricity\\Electricity.csv";
         // test.loadFile(file1);
         // test.print();
     }
