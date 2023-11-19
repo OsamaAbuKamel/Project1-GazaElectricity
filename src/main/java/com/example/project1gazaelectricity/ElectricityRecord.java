@@ -1,6 +1,8 @@
 package com.example.project1gazaelectricity;
 
 public class ElectricityRecord implements Comparable<ElectricityRecord> {
+    // Represents the date
+    private String date;
     // Represents the electricity supply from Israeli lines
     private double israeliLines;
     // Represents the electricity supply from the Gaza power plant
@@ -20,9 +22,11 @@ public class ElectricityRecord implements Comparable<ElectricityRecord> {
     public ElectricityRecord() {
     }
 
-    public ElectricityRecord(double israeliLines, double gazaPowerPlant, double egyptianLines, double totalSupply,
+    public ElectricityRecord(String date, double israeliLines, double gazaPowerPlant, double egyptianLines,
+            double totalSupply,
             double overallDemand,
             double powerCutsHoursDay, double temp) {
+        this.setDate(date);
         this.setIsraeliLines(israeliLines);
         this.setGazaPowerPlant(gazaPowerPlant);
         this.setEgyptianLines(egyptianLines);
@@ -30,6 +34,14 @@ public class ElectricityRecord implements Comparable<ElectricityRecord> {
         this.setOverallDemand(overallDemand);
         this.setPowerCutsHoursDay(powerCutsHoursDay);
         this.setTemp(temp);
+    }
+
+    public String getDate() {
+        return this.date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     // Getter & Setter
@@ -107,14 +119,14 @@ public class ElectricityRecord implements Comparable<ElectricityRecord> {
     }
 
     public void setTemp(double temp) {
-        if (temp <=50)
+        if (temp <= 50)
             this.temp = temp;
         else
             throw new IllegalArgumentException("Temperature cannot be greater than 50");
     }
 
     public String toString() {
-        return israeliLines + "," + gazaPowerPlant + "," + egyptianLines + "," +
+        return date+","+israeliLines + "," + gazaPowerPlant + "," + egyptianLines + "," +
                 overallDemand + "," + powerCutsHoursDay + "," + temp + "\n";
     }
 

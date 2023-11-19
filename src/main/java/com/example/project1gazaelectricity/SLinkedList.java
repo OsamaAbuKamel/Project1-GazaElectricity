@@ -135,7 +135,7 @@ public class SLinkedList<T extends Comparable<T>> implements Iterable<T>, Compar
         // If we've gone through the whole list and haven't found the data, return false
         return null;
     }
-  
+
     public void reverse() {
         Node<T> curr = this.head.getNext(); // Start at the first node
         Node<T> prev = null; // Initialize previous node to null
@@ -190,20 +190,20 @@ public class SLinkedList<T extends Comparable<T>> implements Iterable<T>, Compar
     }
 
     public T get(int index) {
-        if (isEmpty()) {
-            throw new IndexOutOfBoundsException();
-        } else {
-            Node<T> curr = head.getNext();
-            int currIndex = 0;
-            while (curr != null) {
-                if (currIndex == index) {
-                    return curr.getData();
-                }
-                currIndex++;
-                curr = curr.getNext();
-            }
-            return null;
+        if (index < 0) {
+            throw new IndexOutOfBoundsException("Index cannot be negative");
         }
+        if (isEmpty()) {
+            throw new IndexOutOfBoundsException("List is empty");
+        }
+        Node<T> curr = head.getNext();
+        for (int i = 0; i < index; i++) {
+            curr = curr.getNext();
+        }
+        if (curr == null) {
+            throw new IndexOutOfBoundsException("Index: " + index + " greater than list size");
+        }
+        return curr.getData();
     }
 
     public Node<T> getHead() {

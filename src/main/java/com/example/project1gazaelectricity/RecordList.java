@@ -12,28 +12,29 @@ public class RecordList {
         records = new SLinkedList<>();
     }
 
-    public void add(String date, ElectricityRecord record) {
-        int[] partsOfDate = parseDate(date);
+    public void add(ElectricityRecord record) {
+        if (record == null)
+            throw new IllegalArgumentException("Record cannot be null");
+        int[] partsOfDate = parseDate(record.getDate());
         validateDate(partsOfDate[0], partsOfDate[1], partsOfDate[2]);
         SLinkedList<SLinkedList<ElectricityRecord>> yearList = getOrCreateYearList(partsOfDate[0]);
         SLinkedList<ElectricityRecord> monthList = getOrCreateMonthList(yearList, partsOfDate[1]);
         ElectricityRecord dayRecord = getOrCreateDayRecord(monthList, partsOfDate[2]);
-        updateRecord(dayRecord, record);
+        setRecord(dayRecord, record);
     }
 
-    public void remove(String date, ElectricityRecord record) {
-        int[] partsOfDate = parseDate(date);
+    public void remove(ElectricityRecord record) {
+        if (record == null)
+            throw new IllegalArgumentException("Record cannot be null");
+        int[] partsOfDate = parseDate(record.getDate());
         validateDate(partsOfDate[0], partsOfDate[1], partsOfDate[2]);
         SLinkedList<ElectricityRecord> monthList = records.get(partsOfDate[0]).get(partsOfDate[1]);
-        if (record == null) {
-            throw new IllegalArgumentException("Record cannot be null");
-        } else if (search(date) != null) {
+        if (search(record.getDate()) != null)
             monthList.deleteSorted(record);
-        }
     }
 
-    public void update(String date, ElectricityRecord newRecord) {
-        ElectricityRecord record = search(date);
+    public void update(ElectricityRecord newRecord) {
+        ElectricityRecord record = search(newRecord.getDate());
         if (record != null) {
             record.setIsraeliLines(newRecord.getIsraeliLines());
             record.setGazaPowerPlant(newRecord.getGazaPowerPlant());
@@ -87,7 +88,7 @@ public class RecordList {
         return monthList.get(day);
     }
 
-    private void updateRecord(ElectricityRecord dayRecord, ElectricityRecord record) {
+    private void setRecord(ElectricityRecord dayRecord, ElectricityRecord record) {
         dayRecord.setIsraeliLines(record.getIsraeliLines());
         dayRecord.setGazaPowerPlant(record.getGazaPowerPlant());
         dayRecord.setEgyptianLines(record.getEgyptianLines());
@@ -162,13 +163,14 @@ public class RecordList {
         }
     }
 
-    public ElectricityRecord getElectricityRecord(int year, int month, int day) {
-        if (records.length() > year) {
-            SLinkedList<SLinkedList<ElectricityRecord>> yearList = records.get(year);
-            if (yearList.length() > month) {
-                SLinkedList<ElectricityRecord> monthList = yearList.get(month);
-                if (monthList.length() > day) {
-                    return monthList.get(day);
+    public ElectricityRecord getElectricityRecord(String date) {
+        int[] dateParts = parseDate(date);
+        if (records.length() > dateParts[0]) {
+            SLinkedList<SLinkedList<ElectricityRecord>> yearList = records.get(dateParts[0]);
+            if (yearList.length() > dateParts[1]) {
+                SLinkedList<ElectricityRecord> monthList = yearList.get(dateParts[1]);
+                if (monthList.length() > dateParts[2]) {
+                    return monthList.get(dateParts[2]);
                 }
             }
         }
@@ -182,11 +184,10 @@ public class RecordList {
                 line = scanner.nextLine();
                 String parts[] = line.split(",");
                 String date = parts[0];
-                // String[] s = date.split("[/-]");
-                ElectricityRecord record = new ElectricityRecord(Double.parseDouble(parts[1]),
+                ElectricityRecord record = new ElectricityRecord(date, Double.parseDouble(parts[1]),
                         Double.parseDouble(parts[2]), Double.parseDouble(parts[3]), Double.parseDouble(parts[4]),
                         Double.parseDouble(parts[5]), Double.parseDouble(parts[6]), Double.parseDouble(parts[7]));
-                add(date, record);
+                add(record);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -211,18 +212,18 @@ public class RecordList {
         }
     }
 
-    public SLinkedList<SLinkedList<SLinkedList<ElectricityRecord>>> getRecordList() {
+    public SLinkedList<SLinkedList<SLinkedList<ElectricityRecord>>> getRecords() {
         return this.records;
     }
 
-    public void setRecordList(SLinkedList<SLinkedList<SLinkedList<ElectricityRecord>>> recordList) {
-        this.records = recordList;
+    public void setRecords(SLinkedList<SLinkedList<SLinkedList<ElectricityRecord>>> records) {
+        this.records = records;
     }
 
     @Override
     public String toString() {
         return "{" +
-                " recordList='" + getRecordList() + "'" +
+                " recordList='" + getRecords() + "'" +
                 "}";
     }
 
@@ -242,29 +243,88 @@ public class RecordList {
         }
     }
 
-    public static void main(String[] args) {
-        RecordList test = new RecordList();
-        // Add some sample electricity records for testing
-        ElectricityRecord record = new ElectricityRecord(10.0, 5.0, 8.0, 20.0, 15.0, 2.5, 25.0);
-        ElectricityRecord record2 = new ElectricityRecord(12.0, 6.0, 9.0, 22.0, 18.0, 3.0, 26.0);
-        ElectricityRecord record3 = new ElectricityRecord(74.0, 06.0, 10.0, 2.0, 1.0, 3.0, 5.0);
-        test.add("2023-10-01", record);
-        test.add("2023-10-02", record2);
-        test.add("2023-10-03", record3);
-        test.print();
-        // test.printDataStructureWithData();
-        System.out.println("---------------------------");
-        test.remove("2023-10-03", record3);
-        test.print();
-        // test.printDataStructureWithData();
-        // System.out.println(test.search("2023-10-02"));
-        // test.remove(2023, 10, 3, record3);
-        // test.print();
-        // String file =
-        // "src\\main\\resources\\com\\example\\project1gazaelectricity\\data.txt";
-        // String file1 =
-        // "src\\main\\resources\\com\\example\\project1gazaelectricity\\Electricity.csv";
-        // test.loadFile(file1);
-        // test.print();
+    public double getStatisticForDay(String date, String statisticType) {
+        ElectricityRecord record = search(date);
+        if (record != null) {
+            switch (statisticType.toLowerCase()) {
+                case "israeli lines":
+                    return record.getIsraeliLines();
+                case "gaza power plant":
+                    return record.getGazaPowerPlant();
+                case "egyptian lines":
+                    return record.getEgyptianLines();
+                case "total supply":
+                    return record.getTotalSupply();
+                case "overall demand":
+                    return record.getOverallDemand();
+                case "power cuts hours day":
+                    return record.getPowerCutsHoursDay();
+                case "temp":
+                    return record.getTemp();
+                default:
+                    throw new IllegalArgumentException("Invalid statistic type");
+            }
+        }
+        return Double.NaN; // Return NaN for non-existent data
+    }
+
+    public double getStatisticForMonth(int year, int month, String statisticType) {
+        double total = 0;
+        int count = 0;
+        // Iterate through records for the given month and accumulate values
+        // Adjust the following logic based on your actual record structure
+        SLinkedList<ElectricityRecord> monthList = records.get(year).get(month);
+        if (monthList != null) {
+            for (int day = 0; day < monthList.length(); day++) {
+                total += getValueFromRecord(monthList.get(day), statisticType);
+                count++;
+            }
+        }
+        return calculateStatistic(total, count, statisticType);
+    }
+
+    private double getValueFromRecord(ElectricityRecord record, String statisticType) {
+        // Adjust this logic based on your actual record structure and the selected
+        // statisticType
+        switch (statisticType) {
+            case "TOTAL":
+                return record.getTotalSupply();
+            case "AVERAGE":
+                return record.getOverallDemand();
+            // Add more cases for other statistic types
+            default:
+                throw new IllegalArgumentException("Unsupported statistic type: " + statisticType);
+        }
+    }
+
+    private double calculateStatistic(double total, int count, String statisticType) {
+        // Adjust this logic based on the selected statistic type
+        switch (statisticType) {
+            case "TOTAL":
+                return total;
+            case "AVERAGE":
+                return count == 0 ? 0 : total / count;
+            // Add more cases for other statistic types
+            default:
+                throw new IllegalArgumentException("Unsupported statistic type: " + statisticType);
+        }
+    }
+
+    public double getTotalForYear(int year) {
+        if(year < 0 || year >= records.length()){
+            System.out.println("No records found for year " + year);
+            return 0;
+        }
+        
+        double total = 0.0;
+        SLinkedList<SLinkedList<ElectricityRecord>> yearList = records.get(year);
+        for(int month = 0; month < yearList.length(); month++){
+            SLinkedList<ElectricityRecord> monthList = yearList.get(month);
+            for(int day = 0; day < monthList.length(); day++){
+                ElectricityRecord record = monthList.get(day);
+                total += record.getIsraeliLines();
+            }
+        }
+        return total;
     }
 }
