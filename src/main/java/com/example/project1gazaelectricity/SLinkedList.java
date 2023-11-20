@@ -189,20 +189,26 @@ public class SLinkedList<T extends Comparable<T>> implements Iterable<T>, Compar
         return Integer.compare(length(), o.length());
     }
 
-    public T get(int index) {
+   public T get(int index) {
+        // Check if index is negative
         if (index < 0) {
             throw new IndexOutOfBoundsException("Index cannot be negative");
         }
+        // Check if list is empty
         if (isEmpty()) {
             throw new IndexOutOfBoundsException("List is empty");
         }
+        // Create a node to iterate through the list
         Node<T> curr = head.getNext();
+        // Iterate through the list to get to the node at the given index
         for (int i = 0; i < index; i++) {
             curr = curr.getNext();
         }
+        // Check if the index is greater than the size of the list
         if (curr == null) {
             throw new IndexOutOfBoundsException("Index: " + index + " greater than list size");
         }
+        // Return the data of the node at the given index
         return curr.getData();
     }
 
