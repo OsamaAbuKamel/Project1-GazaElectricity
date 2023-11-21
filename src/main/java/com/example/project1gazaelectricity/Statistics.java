@@ -8,7 +8,7 @@ public class Statistics {
     }
 
     public double getStatisticForDay(int day, ElectricityType electricityType, StatisticType type) {
-        if (day < 1 || day > 31) {
+        if (day < 0 || day > 31) {
             System.out.println("Invalid Day");
             return 0;
         }
@@ -43,8 +43,8 @@ public class Statistics {
         }
         double count = 0;
         double total = 0;
-        double max = Double.MIN_VALUE;
-        double min = Double.MAX_VALUE;
+        double max = 0;
+        double min = 0;
         double avg = 0;
         for (int year = 1; year < records.getRecords().length(); year++) {
             SLinkedList<SLinkedList<ElectricityRecord>> yearList = records.getRecords().get(year);
@@ -52,12 +52,12 @@ public class Statistics {
                 SLinkedList<ElectricityRecord> monthList = yearList.get(month);
                 for (int day = 1; day < monthList.length(); day++) {
                     ElectricityRecord record = monthList.get(day);
-                    double recordValue = getRecord(electricityType, record);
-                    total += recordValue;
+                    double value = getRecord(electricityType, record);
+                    total += value;
                     count++;
                     avg = total / count;
-                    max = Math.max(max, recordValue);
-                    min = Math.min(min, recordValue);
+                    max = Math.max(max, value);
+                    min = Math.min(min, value);
                 }
             }
         }
@@ -72,19 +72,18 @@ public class Statistics {
         double count = 0;
         double total = 0;
         double max = 0;
-        double min = Double.MAX_VALUE;
+        double min = 0;
         double avg = 0;
         SLinkedList<SLinkedList<ElectricityRecord>> yearList = records.getRecords().get(year);
         for (int month = 0; month < yearList.length(); month++) {
             SLinkedList<ElectricityRecord> monthList = yearList.get(month);
             for (int day = 0; day < monthList.length(); day++) {
                 ElectricityRecord record = monthList.get(day);
-                double recordValue = getRecord(electricityType, record);
-                total += recordValue;
+                total += getRecord(electricityType, record);
                 count++;
                 avg = total / count;
-                max = Math.max(max, recordValue);
-                min = Math.min(min, recordValue);
+                max = Math.max(max, getRecord(electricityType, record));
+                min = Math.min(min, getRecord(electricityType, record));
             }
         }
         return calcStatistic(type, total, avg, max, min);
@@ -104,8 +103,6 @@ public class Statistics {
                 return 0;
         }
     }
-
-   
 
     private double getRecord(ElectricityType type, ElectricityRecord record) {
         switch (type) {

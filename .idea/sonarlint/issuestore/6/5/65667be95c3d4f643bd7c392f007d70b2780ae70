@@ -1,7 +1,11 @@
 
 U
-java:S1854"8Remove this useless assignment to local variable "file".(ÛÁ£è8Ç¸²ì¾1
+java:S1854"8Remove this useless assignment to local variable "file".(ÛÁ£è8Ç¸²ì¾1
+U
+java:S1854"8Remove this useless assignment to local variable "list".(çÄë8†â‰¿1
 F
-java:S1481")Remove this unused "file" local variable.(ÛÁ£è8É¸²ì¾1
-X	java:S125"<This block of commented-out lines of code should be removed.(ÂÉ÷Ñ8Ë¸²ì¾1
-]	java:S125"<This block of commented-out lines of code should be removed.(Ò´œ¨úÿÿÿÿ8şİ¶—¾1
+java:S1481")Remove this unused "list" local variable.(çÄë8‡â‰¿1
+F
+java:S1481")Remove this unused "file" local variable.(ÛÁ£è8É¸²ì¾1
+X	java:S125"<This block of commented-out lines of code should be removed.(ãÅ¶†8‰â‰¿1
+]	java:S125"<This block of commented-out lines of code should be removed.(¸‡éÈüÿÿÿÿ8şİ¶—¾1

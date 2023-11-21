@@ -1,6 +1,7 @@
 package com.example.project1gazaelectricity;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class SLinkedList<T extends Comparable<T>> implements Iterable<T>, Comparable<SLinkedList<T>> {
     private Node<T> head;
@@ -226,18 +227,22 @@ public class SLinkedList<T extends Comparable<T>> implements Iterable<T>, Compar
     }
 
     private class LinkedListIterator implements Iterator<T> {
-        private Node<T> current;
+        private Node<T> current = head.getNext();
 
-        @Override
-        public boolean hasNext() {
-            return current != null;
+       @Override
+    public boolean hasNext() {
+        return current != null;
+    }
+
+    @Override
+    public T next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException("No more elements in the list");
         }
 
-        @Override
-        public T next() {
-            T data = current.getData();
-            current = current.getNext();
-            return data;
-        }
+        T data = current.getData();
+        current = current.getNext();
+        return data;
+    }
     }
 }

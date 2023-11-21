@@ -44,7 +44,7 @@ public class MainScreen extends VBox {
                 alert(Alert.AlertType.ERROR, "Error", "File is not a file");
             } else {
                 String fileName = file.getAbsolutePath();
-                list.loadFile(fileName);
+                // list.loadFile(fileName);
             }
             if (file != null){
                 disable(true);
@@ -54,7 +54,7 @@ public class MainScreen extends VBox {
             chooser.setTitle("Save File");
             File file = chooser.showSaveDialog(stage);
             if (file != null){
-                list.saveFile(file.toString());
+                // list.saveFile(file.toString());
             }
         });
         btnManagement.setOnAction(e->{

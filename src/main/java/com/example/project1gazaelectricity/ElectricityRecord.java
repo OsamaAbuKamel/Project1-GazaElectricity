@@ -1,8 +1,10 @@
 package com.example.project1gazaelectricity;
 
+import java.util.Calendar;
+
 public class ElectricityRecord implements Comparable<ElectricityRecord> {
     // Represents the date
-    private String date;
+    private Calendar date;
     // Represents the electricity supply from Israeli lines
     private double israeliLines;
     // Represents the electricity supply from the Gaza power plant
@@ -22,11 +24,11 @@ public class ElectricityRecord implements Comparable<ElectricityRecord> {
     public ElectricityRecord() {
     }
 
-    public ElectricityRecord(String date, double israeliLines, double gazaPowerPlant, double egyptianLines,
+    public ElectricityRecord(Calendar date, double israeliLines, double gazaPowerPlant, double egyptianLines,
             double totalSupply,
             double overallDemand,
             double powerCutsHoursDay, double temp) {
-        this.setDate(date);
+        this.date=date;
         this.setIsraeliLines(israeliLines);
         this.setGazaPowerPlant(gazaPowerPlant);
         this.setEgyptianLines(egyptianLines);
@@ -36,14 +38,15 @@ public class ElectricityRecord implements Comparable<ElectricityRecord> {
         this.setTemp(temp);
     }
 
-    public String getDate() {
+
+    public Calendar getDate() {
         return this.date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
-
+   
     // Getter & Setter
     public double getIsraeliLines() {
         return this.israeliLines;
@@ -125,10 +128,10 @@ public class ElectricityRecord implements Comparable<ElectricityRecord> {
             throw new IllegalArgumentException("Temperature cannot be greater than 50");
     }
 
-    public String toString() {
-        return date+","+israeliLines + "," + gazaPowerPlant + "," + egyptianLines + "," +
-                overallDemand + "," + powerCutsHoursDay + "," + temp + "\n";
-    }
+  @Override
+public String toString() {
+    return date.get(Calendar.YEAR)+"/"+date.get(Calendar.MONTH)+"/"+date.get(Calendar.DAY_OF_MONTH) + "," + israeliLines + "," + gazaPowerPlant + "," + egyptianLines + "," + totalSupply + "," + overallDemand + "," + powerCutsHoursDay + "," + temp+"\n";
+}
 
     @Override
     public int compareTo(ElectricityRecord o) {

@@ -1,80 +1,5 @@
 
-L
-java:S3740	"/Provide the parametrized type for this generic.(À½–í8ˆûÙì¾1
-L
-java:S3740	"/Provide the parametrized type for this generic.(À½–í8ˆûÙì¾1
-L
-java:S3740
-"/Provide the parametrized type for this generic.(ù‘§ä8ˆûÙì¾1
-L
-java:S3740
-"/Provide the parametrized type for this generic.(ù‘§ä8ˆûÙì¾1
-L
-java:S3740"/Provide the parametrized type for this generic.(­¡Ÿ´8‰ûÙì¾1
-L
-java:S3740"/Provide the parametrized type for this generic.(­¡Ÿ´8‰ûÙì¾1
-K
-java:S3740"/Provide the parametrized type for this generic.(ÄÚ¥28‰ûÙì¾1
-K
-java:S3740"/Provide the parametrized type for this generic.(ÄÚ¥28‰ûÙì¾1
-Q
-java:S3740"/Provide the parametrized type for this generic.(ä“ùÊûÿÿÿÿ8‰ûÙì¾1
-Q
-java:S3740"/Provide the parametrized type for this generic.(ä“ùÊûÿÿÿÿ8‰ûÙì¾1
-L
-java:S3740"/Provide the parametrized type for this generic.(ÑêÙ¾8‰ûÙì¾1
-L
-java:S3740"/Provide the parametrized type for this generic.(ÑêÙ¾8‰ûÙì¾1
-Q
-java:S3740"/Provide the parametrized type for this generic.(¤Á§Áøÿÿÿÿ8‰ûÙì¾1
-Q
-java:S3740"/Provide the parametrized type for this generic.(¤Á§Áøÿÿÿÿ8‰ûÙì¾1
-Q
-java:S3740"/Provide the parametrized type for this generic.(ƒ÷¢Áùÿÿÿÿ8‰ûÙì¾1
-Q
-java:S3740"/Provide the parametrized type for this generic.(ƒ÷¢Áùÿÿÿÿ8‰ûÙì¾1
-
-java:S1186 "€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ÆÚÅ8›ûÙì¾1
-J
-java:S1068	"-Remove this unused "tableView" private field.(À½–í8¦ûÙì¾1
-H
-java:S1068
-"+Remove this unused "colDate" private field.(ù‘§ä8¦ûÙì¾1
-J
-java:S1068"-Remove this unused "colIsrael" private field.(­¡Ÿ´8¦ûÙì¾1
-H
-java:S1068",Remove this unused "colEgypt" private field.(ÄÚ¥28¦ûÙì¾1
-R
-java:S1068"0Remove this unused "colGazaPower" private field.(ä“ùÊûÿÿÿÿ8¦ûÙì¾1
-O
-java:S1068"2Remove this unused "colTotalSupply" private field.(ÑêÙ¾8¦ûÙì¾1
-M
-java:S1068"+Remove this unused "colTemp" private field.(¤Á§Áøÿÿÿÿ8§ûÙì¾1
-R
-java:S1068"0Remove this unused "colPowerCuts" private field.(ƒ÷¢Áùÿÿÿÿ8§ûÙì¾1
-E
-java:S1068"(Remove this unused "vBox" private field.(°Í¦8§ûÙì¾1
-N
-java:S1068",Remove this unused "gridPane" private field.(ôæÿüÿÿÿÿ8§ûÙì¾1
-L
-java:S1068"*Remove this unused "btnAdd" private field.(áïäùÿÿÿÿ8§ûÙì¾1
-O
-java:S1068"-Remove this unused "btnUpdate" private field.(š–‘‹ûÿÿÿÿ8§ûÙì¾1
-J
-java:S1068"-Remove this unused "btnDelete" private field.(‡Ã…Ş8§ûÙì¾1
-M
-java:S1068"+Remove this unused "btnBack" private field.(üÛæˆùÿÿÿÿ8§ûÙì¾1
-J
-java:S1068"-Remove this unused "btnSearch" private field.(ø³áé8§ûÙì¾1
-K
-java:S1068".Remove this unused "datePicker" private field.(‹åœà8§ûÙì¾1
-N
-java:S1068",Remove this unused "tfIsrael" private field.(“¹ışşÿÿÿÿ8§ûÙì¾1
-L
-java:S1068"*Remove this unused "tfGaza" private field.(Ê’ñüÿÿÿÿ8§ûÙì¾1
-K
-java:S1068".Remove this unused "tfEgyptian" private field.(‚Ãšà8§ûÙì¾1
-M
-java:S1068"+Remove this unused "tfTotal" private field.(åÇ…¡ùÿÿÿÿ8§ûÙì¾1
-L
-java:S1068"*Remove this unused "tfTemp" private field.(ûœ—Øüÿÿÿÿ8¨ûÙì¾1
+\
+java:S6213W":Rename this variable to not match a restricted identifier.(”«ˆ‡ûÿÿÿÿ8äà‰¿1
+X	java:S125_"<This block of commented-out lines of code should be removed.(°Ô¦ç8çà‰¿1
+G	java:S106h"+Replace this use of System.out by a logger.(£ ‘ü8èà‰¿1

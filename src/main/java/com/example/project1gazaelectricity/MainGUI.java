@@ -25,7 +25,6 @@ public class MainGUI extends Application {
     private Scene scene;
     private Image gifImage = new Image(
             "C:\\Users\\osama\\repos\\Project1-GazaElectricity\\src\\main\\resources\\com\\example\\project1gazaelectricity\\system-solid-49-upload-file (1).gif");
-
     // Create ImageView with the GIF image
     private ImageView imageView = new ImageView(gifImage);
 
@@ -43,7 +42,6 @@ public class MainGUI extends Application {
         primaryStage.getIcons().add(new Image(
                 "C:\\Users\\osama\\repos\\Project1-GazaElectricity\\src\\main\\resources\\com\\example\\project1gazaelectricity\\electricity.png"));
         primaryStage.show();
-
     }
 
     public static void main(String[] args) {
@@ -51,30 +49,28 @@ public class MainGUI extends Application {
     }
 
     private void handle(Stage stage) {
-        File initialDirectory = new File("C:\\Users\\osama\\repos\\Project1-GazaElectricity\\src");
-        btnUpload.setOnAction(e -> {
-            chooser.setInitialDirectory(initialDirectory);
-            chooser.setTitle("Open File");
-            File file = chooser.showOpenDialog(stage);
-            if (file == null) {
-                alert(Alert.AlertType.ERROR, "Error", "File Is Null");
-            } else if (!file.exists()) {
-                alert(Alert.AlertType.ERROR, "Error", "File not found");
-            } else if (!file.isFile()) {
-                alert(Alert.AlertType.ERROR, "Error", "File is not a file");
-            } else {
-                String fileName = file.getAbsolutePath();
-                list.loadFile(fileName);
-            }
-            if (file != null) {
-                disable(true);
-            }
-        });
+        // btnUpload.setOnAction(e -> {
+        //     chooser.setTitle("Open File");
+        //     File file = chooser.showOpenDialog(stage);
+        //     if (file == null) {
+        //         alert(Alert.AlertType.ERROR, "Error", "File Is Null");
+        //     } else if (!file.exists()) {
+        //         alert(Alert.AlertType.ERROR, "Error", "File not found");
+        //     } else if (!file.isFile()) {
+        //         alert(Alert.AlertType.ERROR, "Error", "File is not a file");
+        //     } else {
+        //         String fileName = file.getAbsolutePath();
+        //         list.loadFile(fileName);
+        //     }
+        //     if (file != null) {
+        //         disable(true);
+        //     }
+        // });
         btnSave.setOnAction(event -> {
             chooser.setTitle("Save File");
             File file = chooser.showSaveDialog(stage);
             if (file != null) {
-                list.saveFile(file.toString());
+                // list.saveFile(file.toString());
             }
         });
         btnManagement.setOnAction(e -> {
