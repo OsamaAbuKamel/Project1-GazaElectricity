@@ -187,10 +187,25 @@ public class SLinkedList<T extends Comparable<T>> implements Iterable<T>, Compar
 
     @Override
     public int compareTo(SLinkedList<T> o) {
-        return Integer.compare(length(), o.length());
+        Node<T> curr1 = this.head.getNext();
+        Node<T> curr2 = o.head.getNext();
+        while (curr1 != null && curr2 != null) {
+            int compare = curr1.getData().compareTo(curr2.getData());
+            if (compare != 0) {
+                return compare;
+            }
+            curr1 = curr1.getNext();
+            curr2 = curr2.getNext();
+        }
+        if (curr1 == null && curr2 == null) {
+            return -1;
+        } else if (curr2 == null && curr1 != null) {
+            return 1;
+        } else
+            return 0;
     }
 
-   public T get(int index) {
+    public T get(int index) {
         // Check if index is negative
         if (index < 0) {
             throw new IndexOutOfBoundsException("Index cannot be negative");
@@ -229,20 +244,19 @@ public class SLinkedList<T extends Comparable<T>> implements Iterable<T>, Compar
     private class LinkedListIterator implements Iterator<T> {
         private Node<T> current = head.getNext();
 
-       @Override
-    public boolean hasNext() {
-        return current != null;
-    }
-
-    @Override
-    public T next() {
-        if (!hasNext()) {
-            throw new NoSuchElementException("No more elements in the list");
+        @Override
+        public boolean hasNext() {
+            return current != null;
         }
 
-        T data = current.getData();
-        current = current.getNext();
-        return data;
-    }
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException("No more elements in the list");
+            }
+            T data = current.getData();
+            current = current.getNext();
+            return data;
+        }
     }
 }

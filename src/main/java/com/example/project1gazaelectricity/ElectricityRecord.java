@@ -130,11 +130,15 @@ public class ElectricityRecord implements Comparable<ElectricityRecord> {
 
   @Override
 public String toString() {
-    return date.get(Calendar.YEAR)+"/"+date.get(Calendar.MONTH)+"/"+date.get(Calendar.DAY_OF_MONTH) + "," + israeliLines + "," + gazaPowerPlant + "," + egyptianLines + "," + totalSupply + "," + overallDemand + "," + powerCutsHoursDay + "," + temp+"\n";
+    return  "," + israeliLines + "," + gazaPowerPlant + "," + egyptianLines + "," + totalSupply + "," + overallDemand + "," + powerCutsHoursDay + "," + temp+"\n";
 }
+//   @Override
+// public String toString() {
+//     return getDate().get(Calendar.YEAR)+"/"+getDate().get(Calendar.MONTH)+"/"+getDate().get(Calendar.DAY_OF_MONTH)+ "," + israeliLines + "," + gazaPowerPlant + "," + egyptianLines + "," + totalSupply + "," + overallDemand + "," + powerCutsHoursDay + "," + temp+"\n";
+// }
 
     @Override
     public int compareTo(ElectricityRecord o) {
-        return Double.compare(this.overallDemand, o.overallDemand);
+        return Double.compare(israeliLines, o.israeliLines);
     }
 }

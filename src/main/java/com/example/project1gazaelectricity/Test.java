@@ -15,12 +15,12 @@ public class Test {
     public void add(ElectricityRecord record) {
         if (record == null)
             throw new IllegalArgumentException("Record cannot be null");
-        int[] partsOfDate = parseDate(record.getDate());
-        validateDate(partsOfDate[0], partsOfDate[1], partsOfDate[2]);
-        SLinkedList<SLinkedList<ElectricityRecord>> yearList = getOrCreateYearList(partsOfDate[0]);
-        SLinkedList<ElectricityRecord> monthList = getOrCreateMonthList(yearList, partsOfDate[1]);
-        ElectricityRecord dayRecord = getOrCreateDayRecord(monthList, partsOfDate[2]);
-        setRecord(dayRecord, record);
+        // int[] partsOfDate = parseDate(record.getDate());
+        // validateDate(partsOfDate[0], partsOfDate[1], partsOfDate[2]);
+        // SLinkedList<SLinkedList<ElectricityRecord>> yearList = getOrCreateYearList(partsOfDate[0]);
+        // SLinkedList<ElectricityRecord> monthList = getOrCreateMonthList(yearList, partsOfDate[1]);
+        // ElectricityRecord dayRecord = getOrCreateDayRecord(monthList, partsOfDate[2]);
+        // setRecord(dayRecord, record);
     }
 
     private SLinkedList<SLinkedList<ElectricityRecord>> getOrCreateYearList(int year) {
@@ -55,28 +55,28 @@ public class Test {
         dayRecord.setTemp(record.getTemp());
     }
 
-    public void remove(ElectricityRecord record) {
-        if (record == null)
-            throw new IllegalArgumentException("Record cannot be null");
-        int[] partsOfDate = parseDate(record.getDate());
-        validateDate(partsOfDate[0], partsOfDate[1], partsOfDate[2]);
-        SLinkedList<ElectricityRecord> monthList = records.get(partsOfDate[0]).get(partsOfDate[1]);
-        if (search(record.getDate()) != null)
-            monthList.deleteSorted(record);
-    }
+    // public void remove(ElectricityRecord record) {
+    //     if (record == null)
+    //         throw new IllegalArgumentException("Record cannot be null");
+    //     int[] partsOfDate = parseDate(record.getDate());
+    //     validateDate(partsOfDate[0], partsOfDate[1], partsOfDate[2]);
+    //     SLinkedList<ElectricityRecord> monthList = records.get(partsOfDate[0]).get(partsOfDate[1]);
+    //     if (search(record.getDate()) != null)
+    //         monthList.deleteSorted(record);
+    // }
 
-    public void update(ElectricityRecord newRecord) {
-        ElectricityRecord record = search(newRecord.getDate());
-        if (record != null) {
-            record.setIsraeliLines(newRecord.getIsraeliLines());
-            record.setGazaPowerPlant(newRecord.getGazaPowerPlant());
-            record.setEgyptianLines(newRecord.getEgyptianLines());
-            record.setTotalSupply(newRecord.getTotalSupply());
-            record.setOverallDemand(newRecord.getOverallDemand());
-            record.setPowerCutsHoursDay(newRecord.getPowerCutsHoursDay());
-            record.setTemp(newRecord.getTemp());
-        }
-    }
+    // public void update(ElectricityRecord newRecord) {
+    //     ElectricityRecord record = search(newRecord.getDate());
+    //     if (record != null) {
+    //         record.setIsraeliLines(newRecord.getIsraeliLines());
+    //         record.setGazaPowerPlant(newRecord.getGazaPowerPlant());
+    //         record.setEgyptianLines(newRecord.getEgyptianLines());
+    //         record.setTotalSupply(newRecord.getTotalSupply());
+    //         record.setOverallDemand(newRecord.getOverallDemand());
+    //         record.setPowerCutsHoursDay(newRecord.getPowerCutsHoursDay());
+    //         record.setTemp(newRecord.getTemp());
+    //     }
+    // }
 
     public ElectricityRecord search(String date) {
         int[] partsOfDate = parseDate(date);
@@ -177,22 +177,22 @@ public class Test {
         return null;
     }
 
-    public void loadFile(String fileName) {
-        try (Scanner scanner = new Scanner(new File(fileName))) {
-            String line = scanner.nextLine();
-            while (scanner.hasNext()) {
-                line = scanner.nextLine();
-                String parts[] = line.split(",");
-                String date = parts[0];
-                ElectricityRecord record = new ElectricityRecord(date, Double.parseDouble(parts[1]),
-                        Double.parseDouble(parts[2]), Double.parseDouble(parts[3]), Double.parseDouble(parts[4]),
-                        Double.parseDouble(parts[5]), Double.parseDouble(parts[6]), Double.parseDouble(parts[7]));
-                add(record);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
+    // public void loadFile(String fileName) {
+    //     try (Scanner scanner = new Scanner(new File(fileName))) {
+    //         String line = scanner.nextLine();
+    //         while (scanner.hasNext()) {
+    //             line = scanner.nextLine();
+    //             String parts[] = line.split(",");
+    //             String date = parts[0];
+    //             ElectricityRecord record = new ElectricityRecord(date, Double.parseDouble(parts[1]),
+    //                     Double.parseDouble(parts[2]), Double.parseDouble(parts[3]), Double.parseDouble(parts[4]),
+    //                     Double.parseDouble(parts[5]), Double.parseDouble(parts[6]), Double.parseDouble(parts[7]));
+    //             add(record);
+    //         }
+    //     } catch (Exception e) {
+    //         System.out.println(e.getMessage());
+    //     }
+    // }
 
     public void saveFile(String fileName) {
         try (PrintWriter writer = new PrintWriter(new FileOutputStream(fileName, true))) {
