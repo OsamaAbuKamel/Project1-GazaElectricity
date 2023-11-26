@@ -53,7 +53,7 @@ public class SLinkedList<T extends Comparable<T>> implements Iterable<T>, Compar
         Node<T> prev;
         // Traverse the linked list until the end or until the data is less than or
         // equal to the current node's data
-        for (prev = head; curr != null && data.compareTo(curr.getData()) > 0; curr = curr.getNext()) {
+        for (prev = head; curr != null && data.compareTo(curr.getData()) >= 0; curr = curr.getNext()) {
             prev = curr;
         }
         // Set the next node of the new node to the current node or the next node of the

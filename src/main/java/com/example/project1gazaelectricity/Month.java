@@ -9,6 +9,12 @@ public class Month implements Comparable<Month> {
     }
     public void addDay(Day day) {
         days.insertSorted(day);
+    } 
+    public void removeDay(Day day) {
+        days.deleteSorted(day);
+    }
+    public Day get(int index){
+        return days.get(index);
     }
     public int getMonth() {
         return month;

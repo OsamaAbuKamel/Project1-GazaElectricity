@@ -1,8 +1,6 @@
 
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-u
-Esrc/main/java/com/example/project1gazaelectricity/DateManagement.java,e\8\e806d1ffa600f5fb2256ceddcbd958a89ee8cfae
 x
 Hsrc/main/java/com/example/project1gazaelectricity/ElectricityRecord.java,a\6\a6e7cf86df84e1d9da6651731d0d3ab2eaaf931a
 k
@@ -11,11 +9,11 @@ r
 Bsrc/main/java/com/example/project1gazaelectricity/SLinkedList.java,4\f\4f2c42d66bdfa58348c60e8e44c76edbc8a7b54c
 k
 ;src/main/java/com/example/project1gazaelectricity/Node.java,2\8\2849eb4ef19ca1ab4115de813daeac13b064b179
-q
-Asrc/main/java/com/example/project1gazaelectricity/MainScreen.java,f\e\fef003e210c73a4b526a32bf432b54b50c64b105
 n
 >src/main/java/com/example/project1gazaelectricity/MainGUI.java,8\b\8b80d4519d6dcb0628c61c2c674acee37db682af
 w
 Gsrc/main/java/com/example/project1gazaelectricity/ManagementScreen.java,1\c\1cc63ca3fe5dfd6530695139ef52db2f20ea6107
 v
 Fsrc/main/java/com/example/project1gazaelectricity/ElectricityType.java,2\9\29ac9e34c31100192b9555f40e8adc0c0e9f18f7
+q
+Asrc/main/java/com/example/project1gazaelectricity/MultiChart.java,7\e\7ef21b9167ee26bf6b2676c60e9fc9cea171e922

@@ -25,7 +25,7 @@ public class Day implements Comparable<Day> {
 
     @Override
     public String toString() {
-        return ""+getDay() + getRecord();
+        return ""+ getRecord();
     }
 
 }

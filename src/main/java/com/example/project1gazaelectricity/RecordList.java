@@ -19,21 +19,40 @@ public class RecordList {
         Calendar calendar = record.getDate();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
-        // Ensure the yearList is large enough to hold this year
-        while (yearList.length() <= year) {
-            yearList.insertSorted(new SLinkedList<SLinkedList<ElectricityRecord>>());
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        SLinkedList<SLinkedList<ElectricityRecord>> monthList = null;
+        if (year >= yearList.length()) {
+            monthList = new SLinkedList<>();
+            yearList.insertSorted(monthList);
+        } else {
+            monthList = yearList.get(year);
         }
-        // Get the list of months for this year
-        SLinkedList<SLinkedList<ElectricityRecord>> months = yearList.get(year);
-        // Ensure the months list is large enough to hold this month
-        while (months.length() <= month) {
-            months.insertSorted(new SLinkedList<ElectricityRecord>());
+        SLinkedList<ElectricityRecord> dayList = null;
+        if (month >= monthList.length()) {
+            dayList = new SLinkedList<>();
+            monthList.insertSorted(dayList);
+        } else {
+            dayList = monthList.get(month);
         }
-        // Get the list of records for this month
-        SLinkedList<ElectricityRecord> records = months.get(month);
-        // Add the record to the list
-        records.insertSorted(record);
+        dayList.insertSorted(record);
+        
     }
+
+    // // Ensure the yearList is large enough to hold this year
+    // while (yearList.length() <= year) {
+    // yearList.insertSorted(new SLinkedList<SLinkedList<ElectricityRecord>>());
+    // }
+    // // Get the list of months for this year
+    // SLinkedList<SLinkedList<ElectricityRecord>> months = yearList.get(year);
+    // // Ensure the months list is large enough to hold this month
+    // while (months.length() <= month) {
+    // months.insertSorted(new SLinkedList<ElectricityRecord>());
+    // }
+    // // Get the list of records for this month
+    // SLinkedList<ElectricityRecord> records = months.get(month);
+    // // Add the record to the list
+    // records.insertSorted(record);
+    
 
     public void remove(ElectricityRecord record) {
         Calendar calendar = record.getDate();
@@ -105,10 +124,13 @@ public class RecordList {
             while (scanner.hasNext()) {
                 line = scanner.nextLine();
                 String parts[] = line.split(",");
-                String date = parts[0];
-                ElectricityRecord record = new ElectricityRecord(stringToCalendar(date), Double.parseDouble(parts[1]),
-                        Double.parseDouble(parts[2]), Double.parseDouble(parts[3]), Double.parseDouble(parts[4]),
-                        Double.parseDouble(parts[5]), Double.parseDouble(parts[6]), Double.parseDouble(parts[7]));
+                String date = parts[0].trim();
+                ElectricityRecord record = new ElectricityRecord(stringToCalendar(date),
+                        Double.parseDouble(parts[1].trim()),
+                        Double.parseDouble(parts[2].trim()), Double.parseDouble(parts[3].trim()),
+                        Double.parseDouble(parts[4].trim()),
+                        Double.parseDouble(parts[5].trim()), Double.parseDouble(parts[6].trim()),
+                        Double.parseDouble(parts[7].trim()));
                 add(record);
             }
         } catch (Exception e) {
@@ -116,17 +138,18 @@ public class RecordList {
         }
     }
 
-    public void saveFile(String fileName) throws IOException {
+    public void saveFile(String fileName) {
         try (PrintWriter writer = new PrintWriter(new FileOutputStream(fileName, true))) {
             for (SLinkedList<SLinkedList<ElectricityRecord>> year : yearList) {
                 for (SLinkedList<ElectricityRecord> month : year) {
                     for (ElectricityRecord record : month) {
-                        writer.write(fileName);
+                        writer.write(record.toString());
                     }
                 }
             }
-        } catch (Exception e) {
-            // TODO: handle exception
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+
         }
     }
 
@@ -141,26 +164,26 @@ public class RecordList {
 
     public void print() {
         for (SLinkedList<SLinkedList<ElectricityRecord>> year : yearList) {
-          for (SLinkedList<ElectricityRecord> month : year) {  
-            for (ElectricityRecord record : month) {
-              if (record!=null) { 
-                System.out.print(record);
-              }
+            for (SLinkedList<ElectricityRecord> month : year) {
+                for (ElectricityRecord record : month) {
+                    if (record != null) {
+                        System.out.print(record);
+                    }
+                }
             }
-          }
         }
-      
+
         // // Iterate over each year in the yearList
         // for (int year = 0; year < yearList.length(); year++) {
-        //     SLinkedList<SLinkedList<ElectricityRecord>> months = yearList.get(year);
-        //     // Iterate over each month in the year
-        //     for (int month = 0; month < months.length(); month++) {
-        //         SLinkedList<ElectricityRecord> records = months.get(month);
-        //         // Iterate over each record in the month
-        //         for (ElectricityRecord record : records) {
-        //             System.out.print(record);
-        //         }
-        //     }
+        // SLinkedList<SLinkedList<ElectricityRecord>> months = yearList.get(year);
+        // // Iterate over each month in the year
+        // for (int month = 0; month < months.length(); month++) {
+        // SLinkedList<ElectricityRecord> records = months.get(month);
+        // // Iterate over each record in the month
+        // for (ElectricityRecord record : records) {
+        // System.out.print(record);
+        // }
+        // }
         // }
     }
 

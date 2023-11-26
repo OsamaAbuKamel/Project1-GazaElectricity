@@ -3,13 +3,15 @@
 java:S1854"9Remove this useless assignment to local variable "file1".(ç£šìıÿÿÿÿ8¥ıÓÛ¿1
 Z
 java:S1854"8Remove this useless assignment to local variable "file".(‹œìüÿÿÿÿ8¥ıÓÛ¿1
+`
+java:S1854
+">Remove this useless assignment to local variable "statistics".(ÏÔ¸ùÿÿÿÿÿ8’ÃŞÓÀ1
+Q
+java:S1481
+"/Remove this unused "statistics" local variable.(ÏÔ¸ùÿÿÿÿÿ8•ÃŞÓÀ1
 K
 java:S1481")Remove this unused "file" local variable.(‹œìüÿÿÿÿ8©ıÓÛ¿1
 L
 java:S1481"*Remove this unused "file1" local variable.(ç£šìıÿÿÿÿ8«ıÓÛ¿1
 ]	java:S125"<This block of commented-out lines of code should be removed.(‡ïÀøÿÿÿÿ8¬ıÓÛ¿1
-P
-java:S2110"."12" is not a valid value for setting "month".(ôïº•ûÿÿÿÿ8°ıÓÛ¿1
-L	java:S106""+Replace this use of System.out by a logger.(·Ú¤”øÿÿÿÿ8´ıÓÛ¿1
-X	java:S125!"<This block of commented-out lines of code should be removed.(İÔ†í8´ıÓÛ¿1
-G	java:S106#"+Replace this use of System.out by a logger.(ŒÚåí8µıÓÛ¿1
+]	java:S125 "<This block of commented-out lines of code should be removed.(÷œ–ğûÿÿÿÿ8›ÃŞÓÀ1

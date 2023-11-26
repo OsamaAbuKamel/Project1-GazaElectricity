@@ -11,6 +11,12 @@ public class Year implements Comparable<Year> {
 
     public void addMonth(Month month) {
         this.monthList.insertSorted(month);
+    } 
+      public void removeMonth(Month month) {
+        this.monthList.deleteSorted(month);
+    }
+    public Month get(int index){
+        return monthList.get(index);
     }
 
     public SLinkedList<Month> getMonthList() {
