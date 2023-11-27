@@ -17,6 +17,5 @@ public class SceneChanger {
         mainStage.setScene(mainScene);
         mainStage.sizeToScene();  
         mainStage.centerOnScreen();
-
     }
 }

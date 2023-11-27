@@ -29,8 +29,5 @@ public class Month implements Comparable<Month> {
     @Override
     public int compareTo(Month o) {
         return Integer.compare(month, o.month);
-
     }
-
-    
 }

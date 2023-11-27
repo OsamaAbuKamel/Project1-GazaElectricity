@@ -14,9 +14,7 @@ public class MainGUI extends Application {
     public void start(Stage stage) throws Exception {
         list = new RecordList();
         SceneChanger.setMainStage(stage);
-
         SceneChanger.changeScene(new MainScreen(list));
-
         stage.show();
     }
 

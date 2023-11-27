@@ -1,5 +1,7 @@
 package com.example.project1gazaelectricity;
 
+import java.util.Calendar;
+
 public class Statistics {
     private RecordList records;
 
@@ -8,104 +10,77 @@ public class Statistics {
     }
 
     public double getStatisticForDay(int day, ElectricityType electricityType, StatisticType type) {
-        if (day < 0 || day > 30) {
-            System.out.println("Invalid Day");
-            return 0;
-        }
-        double count = 0;
         double total = 0;
+        double count = 0;
         double max = 0;
-        double min = Double.MAX_VALUE;
-        double avg = 0;
-        for (int year = 1; year < records.getRecords().length(); year++) {
-            SLinkedList<SLinkedList<ElectricityRecord>> yearList = records.getRecords().get(year);
-            for (int month = 1; month < yearList.length(); month++) {
-                SLinkedList<ElectricityRecord> monthList = yearList.get(month);
-                if (day < monthList.length()) {
-                    ElectricityRecord record = monthList.get(day);
-                    double recordValue = getRecord(electricityType, record);
-                    total += recordValue;
-                    count++;
-                    avg = total / count;
-                    max = Math.max(max, recordValue);
-                    min = Math.min(min, recordValue);
+        double min = 0;
+        for (Year year : records.getRecords()) {
+            for (Month month : year.getMonthList()) {
+                for (Day days : month.getDays()) {
+                    if (days.getRecord().getDate().get(Calendar.DAY_OF_MONTH) == day) {
+                        double recordValue = getRecord(electricityType, days.getRecord());
+                        total += recordValue;
+                        count++;
+                        max = Math.max(max, recordValue);
+                        min = Math.min(min, recordValue);
+                    }
+
                 }
+
             }
         }
-        return calcStatistic(type, total, avg, max, min);
-    }
 
-    public double getMonth(int month, ElectricityType electricityType, StatisticType type) {
-        double result = 0;
-        for (SLinkedList<SLinkedList<ElectricityRecord>> monthList : records.getRecords()) {
-        }
-        return result;
+        return calcStatistic(type, total, count, max, min);
     }
 
     public double getStatisticForMonth(int month, ElectricityType electricityType, StatisticType type) {
-        double count = 0;
         double total = 0;
+        double count = 0;
         double max = 0;
         double min = 0;
-        double avg = 0;
-        for (int year = 1; year < records.getRecords().length(); year++) {
-            SLinkedList<SLinkedList<ElectricityRecord>> yearList = records.getRecords().get(year);
-            if (month < yearList.length()) {
-                SLinkedList<ElectricityRecord> monthList = yearList.get(month);
-                for (int i = 0; i < monthList.length(); i++) {
-                    ElectricityRecord record = monthList.get(i);
-                    double value = getRecord(electricityType, record);
-                    total += value;
-                    count++;
-                    avg = total / count;
-                    max = Math.max(max, value);
-                    min = Math.max(min, value);
+        for (Year year : records.getRecords()) {
+            for (Month months : year.getMonthList()) {
+                if (months.getMonth() == month) {
+                    for (Day days : months.getDays()) {
+                        double recordValue = getRecord(electricityType, days.getRecord());
+                        total += recordValue;
+                        count++;
+                        max = Math.max(max, recordValue);
+                        min = Math.min(min, recordValue);
+                    }
                 }
             }
         }
-        return calcStatistic(type, total, avg, max, min);
+        return calcStatistic(type, total, count, max, min);
     }
 
-    public double getYear(int year, ElectricityType electricityType, StatisticType type) {
-        double result = 0;
-        SLinkedList<SLinkedList<ElectricityRecord>> monthList = records.getRecords().get(year);
-        for (SLinkedList<ElectricityRecord> sLinkedList : monthList) {
-            result = calc(type, sLinkedList, electricityType);
-        }
-        return result;
-    }
-
-    private double calc(StatisticType type, SLinkedList<ElectricityRecord> records, ElectricityType type1) {
-        double count = 0;
+    public double getStatisticForYear(int year, ElectricityType electricityType, StatisticType type) {
         double total = 0;
+        double count = 0;
         double max = 0;
         double min = 0;
-        for (ElectricityRecord record : records) {
-            double value = getRecord(type1, record);
-            total += value;
-            count++;
-            max = Math.max(max, value);
-            min = Math.max(min, value);
+        for (Year years : records.getRecords()) {
+            if (years.getYear() == year) {
+                for (Month months : years.getMonthList()) {
+                    for (Day records : months.getDays()) {
+                        double recordValue = getRecord(electricityType, records.getRecord());
+                        total += recordValue;
+                        count++;
+                        max = Math.max(max, recordValue);
+                        min = Math.min(min, recordValue);
+                    }
+                }
+            }
         }
-        switch (type) {
-            case TOTAL:
-                return total;
-            case AVERAGE:
-                return total / count;
-            case MAX:
-                return max;
-            case MIN:
-                return min;
-            default:
-                return 0;
-        }
+        return calcStatistic(type, total, count, max, min);
     }
 
-    private double calcStatistic(StatisticType type, double total, double avg, double max, double min) {
+    private double calcStatistic(StatisticType type, double total, double count, double max, double min) {
         switch (type) {
             case TOTAL:
                 return total;
             case AVERAGE:
+                double avg = count == 0 ? 0 : total / count;
                 return avg;
             case MAX:
                 return max;

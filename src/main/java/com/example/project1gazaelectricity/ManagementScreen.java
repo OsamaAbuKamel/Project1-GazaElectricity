@@ -2,10 +2,10 @@ package com.example.project1gazaelectricity;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -30,24 +30,16 @@ public class ManagementScreen extends BorderPane {
     private Button deleteBtn = new Button("Delete");
     private Button backBtn = new Button();
     private Button searchBtn = new Button("Search");
-
+    private  HBox buttonBox = new HBox();
+    private TableView<ElectricityRecord> tableView = new TableView<>();
     private RecordList list;
-
     public ManagementScreen(RecordList list) {
-
+        getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         this.list = list;
-        initializeTable();
         style();
-        HBox buttonBox = new HBox(
-                addBtn,
-                updateBtn,
-                deleteBtn,
-                searchBtn);
+        handle();
         setRight(initializeTable());
         setLeft(initializeGridPane());
-        handle();
-
-        setBottom(buttonBox);
         setTop(backBtn);
     }
 
@@ -69,11 +61,47 @@ public class ManagementScreen extends BorderPane {
         inputGrid.add(powerCutsHoursDayInput, 1, 6);
         inputGrid.add(new Label("Temp:"), 0, 7);
         inputGrid.add(tempInput, 1, 7);
+        buttonBox.getChildren().addAll(addBtn,updateBtn,deleteBtn,searchBtn);
+        inputGrid.add(buttonBox, 1, 8);
+        inputGrid.setPadding(new Insets(16));
+        inputGrid.setVgap(8);
+        inputGrid.setHgap(8);
         return inputGrid;
     }
 
+    private void handle() {
+        addBtn.setOnAction(e -> {
+            ElectricityRecord newRecord = getRecord();
+            list.add(newRecord);
+            updateTableView();
+            clear();
+        });
+        updateBtn.setOnAction(e -> {
+            ElectricityRecord updatedRecord = getRecord();
+            list.update(updatedRecord);
+            updateTableView();
+            clear();
+        });
+        deleteBtn.setOnAction(e -> {
+            ObservableList<ElectricityRecord> searchResults = FXCollections.observableArrayList(list.search(getRecord().getDate()));
+            if (!searchResults.isEmpty()) {
+                tableView.setItems(searchResults);
+            }
+        });
+        searchBtn.setOnAction(e -> {
+            ObservableList<ElectricityRecord> list1 = FXCollections.observableArrayList(list.search(getCalender()));
+            if (list1.isEmpty()) {
+                return;
+            }
+            tableView.setItems(list1); // Set the table view items to the search results
+            clear();
+        });
+        backBtn.setOnAction(e -> {
+            SceneChanger.changeScene(new MainScreen(list));
+        });
+    }
+
     private TableView<ElectricityRecord> initializeTable() {
-        TableView<ElectricityRecord> tableView = new TableView<>();
         TableColumn<ElectricityRecord, String> dateCol = new TableColumn<>("Date");
         dateCol.setCellValueFactory(cellData -> {
             return new SimpleStringProperty(cellData.getValue().getDateInfo());
@@ -94,47 +122,22 @@ public class ManagementScreen extends BorderPane {
         tempCol.setCellValueFactory(new PropertyValueFactory<>("temp"));
         tableView.getColumns().addAll(dateCol, israeliLinesCol, gazaPlantCol,
                 egyptianLinesCol, totalSupplyCol, overallDemandCol, powerCutsCol, tempCol);
-        for (int i = 0; i < list.getRecords().length(); i++) {
-            SLinkedList<SLinkedList<ElectricityRecord>> yearList = list.getRecords().get(i);
-            for (int j = 0; j < yearList.length(); j++) {
-                SLinkedList<ElectricityRecord> monthList = yearList.get(j);
-                for (int k = 0; k < monthList.length(); k++) {
-                    ElectricityRecord record = monthList.get(k);
-                    tableView.getItems().add(record);
+        updateTableView();
+        return tableView;
+    }
+    private void updateTableView() {
+        if (tableView != null) {
+            tableView.getItems().clear();
+        }
+        for (Year year : list.getRecords()) {
+            for (Month month : year.getMonthList()) {
+                for (Day day : month.getDays()) {
+                    tableView.getItems().addAll(day.getRecord());
                 }
             }
         }
-        return tableView;
-    }
-
-    private void handle() {
-        addBtn.setOnAction(e -> {
-            list.add(getRecord());
-            clear();
-        });
-        updateBtn.setOnAction(e -> {
-            list.update(getRecord());
-            clear();
-        });
-        deleteBtn.setOnAction(e -> {
-            list.remove(getRecord());
-            clear();
-        });
-        searchBtn.setOnAction(e -> {
-            ObservableList<ElectricityRecord> list1 = FXCollections.observableArrayList(list.search(getCalender()));
-            if (list1.isEmpty()) {
-                return;
-            }
-            initializeTable().setItems(list1);
-
-            clear();
-        });
-        backBtn.setOnAction(e -> {
-            SceneChanger.changeScene(new MainScreen(list));
-        });
 
     }
-
     private Calendar getCalender() {
         Calendar calendar = new GregorianCalendar();
         datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -147,6 +150,7 @@ public class ManagementScreen extends BorderPane {
     }
 
     private void style() {
+        
         Image image = new Image(
                 "C:\\Users\\osama\\repos\\Project1-GazaElectricity\\src\\main\\resources\\com\\example\\project1gazaelectricity\\left-arrow.gif");
         ImageView imageView = new ImageView(image);
@@ -154,6 +158,8 @@ public class ManagementScreen extends BorderPane {
         imageView.setFitWidth(40);
         backBtn.setGraphic(imageView);
         backBtn.setStyle("-fx-background-color: transparent;");
+        buttonBox.setPadding(new Insets(16));
+        buttonBox.setSpacing(16);
     }
 
     private void clear() {

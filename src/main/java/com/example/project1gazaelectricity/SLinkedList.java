@@ -9,7 +9,7 @@ public class SLinkedList<T extends Comparable<T>> implements Iterable<T>, Compar
     public SLinkedList() {
         head = new Node<>(null);
     }
-
+ 
     // This method inserts a new node with the given data at the head of the linked
     // list
     public void insertAtHead(T data) {

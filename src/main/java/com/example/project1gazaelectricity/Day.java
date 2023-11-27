@@ -1,8 +1,8 @@
 package com.example.project1gazaelectricity;
 
 public class Day implements Comparable<Day> {
-    int day;
-    ElectricityRecord record;
+    private int day;
+    private ElectricityRecord record;
 
     public Day(int day, ElectricityRecord record) {
         this.day = day;
@@ -25,7 +25,7 @@ public class Day implements Comparable<Day> {
 
     @Override
     public String toString() {
-        return ""+ getRecord();
+        return "" + getRecord();
     }
 
 }

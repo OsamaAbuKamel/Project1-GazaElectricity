@@ -24,55 +24,53 @@ public class StatisticsScreen extends BorderPane {
     private CheckBox cbMax = new CheckBox("MAXIMUM");
     private CheckBox cbMin = new CheckBox("MINIMUM");
     private ComboBox<ElectricityType> comboBox = new ComboBox<>();
+    private ComboBox<String> comboBox1 = new ComboBox<>();
     private HBox hBox = new HBox();
     private HBox hBox1 = new HBox();
-    // private LineChart<Number, Number> lineChart;
+    private VBox box = new VBox();
+    private TextArea area = new TextArea();
+    private Button btnResult = new Button("Result");
     private Statistics statistics;
+    private NumberAxis xAxis = new NumberAxis();
+    NumberAxis yAxis = new NumberAxis();
+    private LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
+    private XYChart.Series<Number, Number> series = new XYChart.Series<>();
 
     public StatisticsScreen(RecordList list) {
         this.list = list;
         statistics = new Statistics(list);
+        initialize();
+        style();
+        handle();
+        setTop(btnBack);
+        setLeft(vBox);
+        setCenter(box);
+    }
+
+    private void initialize() {
         hBox.getChildren().addAll(cbTotal, cbAvg);
         hBox1.getChildren().addAll(cbMax, cbMin);
         comboBox.getItems().addAll(ElectricityType.values());
-        style();
-        handle();
-        vBox.getChildren().addAll(tfInput, comboBox, hBox, hBox1);
-        setTop(btnBack);
-        setLeft(vBox);
-        TextArea area = new TextArea();
-        area.setEditable(false);
-        // int day = Integer.parseInt(tfInput.getText());
-        area.setPrefSize(60, 60);
-        double value = statistics.getStatisticForDay(12, ElectricityType.ISRAELI_LINES, StatisticType.AVERAGE);
-        area.setText(String.valueOf(value));
-        setCenter(createChart());
+        comboBox1.getItems().addAll("Day", "Month", "Year");
+        vBox.getChildren().addAll(comboBox1, tfInput, comboBox, hBox, hBox1, btnResult);
+        box.getChildren().addAll(area, createChart());
+        box.setPrefHeight(300);
+        box.setPrefWidth(300);
     }
 
     private LineChart<Number, Number> createChart() {
         // Creating the X and Y axes
-        NumberAxis xAxis = new NumberAxis();
-        NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Day");
+
+        // Set X-axis label based on the selected time unit
+        String timeUnit = comboBox1.getValue();
+        xAxis.setLabel(timeUnit);
         yAxis.setLabel("Statistic Value");
-
         // Creating the line chart
-        LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-        lineChart.setTitle("Statistics for Day");
-
+        lineChart.setTitle("Statistics for " + timeUnit);
         // Creating the data series for the chart
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
         series.setName("Statistic Values");
+        // Check if tfInput is not empty before parsing as an integer
 
-        // Populating the data series with values from your getStatisticForDay method
-        for (int day = 1; day <= 30; day++) {
-            double statisticValue = statistics.getStatisticForDay(day, comboBox.getValue(),
-                    StatisticType.TOTAL);
-            series.getData().add(new XYChart.Data<>(day, statisticValue));
-        }
-
-        // Adding the data series to the chart
-        lineChart.getData().add(series);
         return lineChart;
     }
 
@@ -80,6 +78,43 @@ public class StatisticsScreen extends BorderPane {
         btnBack.setOnAction(e -> {
             SceneChanger.changeScene(new MainScreen(list));
         });
+        btnResult.setOnAction(e -> {
+            double value = 0;
+            String timeUnit = comboBox1.getValue();
+            int input = Integer.parseInt(tfInput.getText());
+            if (comboBox1.getValue() == timeUnit) {
+                value = statistics.getStatisticForDay(Integer.parseInt(tfInput.getText()),
+                        comboBox.getValue(),
+                        getType());
+            } else if (comboBox1.getValue() == timeUnit) {
+                value = statistics.getStatisticForMonth(Integer.parseInt(tfInput.getText()),
+                        comboBox.getValue(),
+                        getType());
+            } else if (comboBox1.getValue() == timeUnit) {
+                value = statistics.getStatisticForYear(Integer.parseInt(tfInput.getText()),
+                        comboBox.getValue(),
+                        getType());
+            }
+            area.setText(String.valueOf(value));
+            series.getData().add(new XYChart.Data<>(input, value));
+            lineChart.getData().add(series);
+        });
+    }
+
+    private StatisticType getType() {
+        if (cbTotal.isSelected()) {
+            return StatisticType.TOTAL;
+        }
+        if (cbAvg.isSelected()) {
+            return StatisticType.AVERAGE;
+        }
+        if (cbMax.isSelected()) {
+            return StatisticType.MAX;
+        }
+        if (cbMin.isSelected()) {
+            return StatisticType.MIN;
+        }
+        return null;
     }
 
     private void style() {
@@ -90,6 +125,5 @@ public class StatisticsScreen extends BorderPane {
         imageView.setFitWidth(40);
         btnBack.setGraphic(imageView);
         btnBack.setStyle("-fx-background-color: transparent;");
-
     }
 }

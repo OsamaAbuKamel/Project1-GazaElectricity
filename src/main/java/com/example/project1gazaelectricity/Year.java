@@ -1,8 +1,8 @@
 package com.example.project1gazaelectricity;
 
 public class Year implements Comparable<Year> {
-    int year;
-   SLinkedList<Month> monthList;
+    private int year;
+    private SLinkedList<Month> monthList;
 
     public Year(int year) {
         this.year = year;
@@ -11,11 +11,13 @@ public class Year implements Comparable<Year> {
 
     public void addMonth(Month month) {
         this.monthList.insertSorted(month);
-    } 
-      public void removeMonth(Month month) {
+    }
+
+    public void removeMonth(Month month) {
         this.monthList.deleteSorted(month);
     }
-    public Month get(int index){
+
+    public Month get(int index) {
         return monthList.get(index);
     }
 
@@ -35,9 +37,8 @@ public class Year implements Comparable<Year> {
         return year + "";
     }
 
-
     @Override
     public int compareTo(Year o) {
-      return Integer.compare(year, o.year);
+        return Integer.compare(year, o.year);
     }
 }

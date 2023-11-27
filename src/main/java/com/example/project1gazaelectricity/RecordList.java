@@ -2,76 +2,48 @@ package com.example.project1gazaelectricity;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 public class RecordList {
-    private SLinkedList<SLinkedList<SLinkedList<ElectricityRecord>>> yearList;
+    private SLinkedList<Year> records;
 
-    RecordList() {
-        yearList = new SLinkedList<>();
+    public RecordList() {
+        records = new SLinkedList<>();
+    }
+
+    public SLinkedList<Year> getRecords() {
+        return this.records;
+    }
+
+    public void setRecords(SLinkedList<Year> records) {
+        this.records = records;
     }
 
     public void add(ElectricityRecord record) {
-        Calendar calendar = record.getDate();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        SLinkedList<SLinkedList<ElectricityRecord>> monthList = null;
-        if (year >= yearList.length()) {
-            monthList = new SLinkedList<>();
-            yearList.insertSorted(monthList);
-        } else {
-            monthList = yearList.get(year);
-        }
-        SLinkedList<ElectricityRecord> dayList = null;
-        if (month >= monthList.length()) {
-            dayList = new SLinkedList<>();
-            monthList.insertSorted(dayList);
-        } else {
-            dayList = monthList.get(month);
-        }
-        dayList.insertSorted(record);
-        
+        int year = record.getDate().get(Calendar.YEAR);
+        int month = record.getDate().get(Calendar.MONTH);
+        int day = record.getDate().get(Calendar.DAY_OF_MONTH);
+        Day day2 = new Day(day, record);
+        Month month2 = new Month(month);
+        month2.addDay(day2);
+        Year year2 = new Year(year);
+        year2.addMonth(month2);
+        records.insertSorted(year2);
     }
 
-    // // Ensure the yearList is large enough to hold this year
-    // while (yearList.length() <= year) {
-    // yearList.insertSorted(new SLinkedList<SLinkedList<ElectricityRecord>>());
-    // }
-    // // Get the list of months for this year
-    // SLinkedList<SLinkedList<ElectricityRecord>> months = yearList.get(year);
-    // // Ensure the months list is large enough to hold this month
-    // while (months.length() <= month) {
-    // months.insertSorted(new SLinkedList<ElectricityRecord>());
-    // }
-    // // Get the list of records for this month
-    // SLinkedList<ElectricityRecord> records = months.get(month);
-    // // Add the record to the list
-    // records.insertSorted(record);
-    
-
     public void remove(ElectricityRecord record) {
-        Calendar calendar = record.getDate();
-        // Get the year and month from the calendar
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        // Get the list of month for this year
-        SLinkedList<SLinkedList<ElectricityRecord>> months = yearList.get(year);
-        // Get the list of records for this month
-        SLinkedList<ElectricityRecord> records = months.get(month);
-        // Check if the records list has this record
-        if (search(calendar) != null) {
-            // remove the record
-            records.deleteSorted(record);
-            // If the records list is empty, remove the month
-            if (records.isEmpty()) {
-                months.clear();
-            }
-        }
+        int year = record.getDate().get(Calendar.YEAR);
+        int month = record.getDate().get(Calendar.MONTH);
+        int day = record.getDate().get(Calendar.DAY_OF_MONTH);
+        Day day2 = new Day(day, record);
+        Month month2 = new Month(month);
+        month2.removeDay(day2);
+        Year year2 = new Year(year);
+        year2.removeMonth(month2);
+        records.deleteSorted(year2);
     }
 
     public void update(ElectricityRecord newRecord) {
@@ -88,34 +60,30 @@ public class RecordList {
     }
 
     public ElectricityRecord search(Calendar calendar) {
-        // Get year,month and day from calender
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        // Get the list of months for the given year
-        SLinkedList<SLinkedList<ElectricityRecord>> months = yearList.get(year);
-        // If there are no records for this year, throw an exception
-        if (months == null) {
-            throw new IllegalArgumentException("No records for this year");
-        }
-        // Get the list of records for the given month
-        SLinkedList<ElectricityRecord> records = months.get(month);
-        // If there are no records for this month, throw an exception
-        if (records == null) {
-            throw new IllegalArgumentException("No records for this month");
-        }
-        // Iterate over each record in the month
-        for (ElectricityRecord record : records) {
-            // Get day from record
-            Calendar recordCalendar = record.getDate();
-            // check if the day is the same as the given day
-            if (recordCalendar.get(Calendar.DAY_OF_MONTH) == day) {
-                return record;
+        int targetYear = calendar.get(Calendar.YEAR);
+        int targetMonth = calendar.get(Calendar.MONTH);
+        int targetDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        Year target = new Year(targetYear);
+        Month targetMonthObj = new Month(targetMonth);
+        Day targetDayObj = new Day(targetDay, null);
+
+        for (Year year : records) {
+            if (year.compareTo(target) == 0) {
+                for (Month month : year.getMonthList()) {
+                    if (month.compareTo(targetMonthObj) == 0) {
+                        for (Day day : month.getDays()) {
+                            if (day.compareTo(targetDayObj) == 0) {
+                                return day.getRecord();
+                            }
+                        }
+                    }
+                }
             }
         }
-        // If no matching record was found, return null
-        return null;
+
+        return null; // record not found
     }
 
     public void loadFile(String fileName) {
@@ -124,13 +92,10 @@ public class RecordList {
             while (scanner.hasNext()) {
                 line = scanner.nextLine();
                 String parts[] = line.split(",");
-                String date = parts[0].trim();
-                ElectricityRecord record = new ElectricityRecord(stringToCalendar(date),
-                        Double.parseDouble(parts[1].trim()),
-                        Double.parseDouble(parts[2].trim()), Double.parseDouble(parts[3].trim()),
-                        Double.parseDouble(parts[4].trim()),
-                        Double.parseDouble(parts[5].trim()), Double.parseDouble(parts[6].trim()),
-                        Double.parseDouble(parts[7].trim()));
+                String date = parts[0];
+                ElectricityRecord record = new ElectricityRecord(stringToCalendar(date), Double.parseDouble(parts[1]),
+                        Double.parseDouble(parts[2]), Double.parseDouble(parts[3]), Double.parseDouble(parts[4]),
+                        Double.parseDouble(parts[5]), Double.parseDouble(parts[6]), Double.parseDouble(parts[7]));
                 add(record);
             }
         } catch (Exception e) {
@@ -138,74 +103,37 @@ public class RecordList {
         }
     }
 
-    public void saveFile(String fileName) {
+    public void saveFile(String fileName)  {
         try (PrintWriter writer = new PrintWriter(new FileOutputStream(fileName, true))) {
-            for (SLinkedList<SLinkedList<ElectricityRecord>> year : yearList) {
-                for (SLinkedList<ElectricityRecord> month : year) {
-                    for (ElectricityRecord record : month) {
+            for (Year year : records) {
+                for (Month month : year.getMonthList()) {
+                    for (Day record : month.getDays()) {
                         writer.write(record.toString());
                     }
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-
         }
     }
 
     private Calendar stringToCalendar(String dateString) {
         String[] dateComponents = dateString.split("[-/]");
         int year = Integer.parseInt(dateComponents[0]);
-        int month = Integer.parseInt(dateComponents[1]) - 1; // Months are zero-indexed in Java
+        int month = Integer.parseInt(dateComponents[1]) ; // Months are zero-indexed in Java
         int day = Integer.parseInt(dateComponents[2]);
         Calendar calendar = new GregorianCalendar(year, month, day);
         return calendar;
     }
 
     public void print() {
-        for (SLinkedList<SLinkedList<ElectricityRecord>> year : yearList) {
-            for (SLinkedList<ElectricityRecord> month : year) {
-                for (ElectricityRecord record : month) {
-                    if (record != null) {
-                        System.out.print(record);
-                    }
-                }
-            }
-        }
-
-        // // Iterate over each year in the yearList
-        // for (int year = 0; year < yearList.length(); year++) {
-        // SLinkedList<SLinkedList<ElectricityRecord>> months = yearList.get(year);
-        // // Iterate over each month in the year
-        // for (int month = 0; month < months.length(); month++) {
-        // SLinkedList<ElectricityRecord> records = months.get(month);
-        // // Iterate over each record in the month
-        // for (ElectricityRecord record : records) {
-        // System.out.print(record);
-        // }
-        // }
-        // }
-    }
-
-    public SLinkedList<SLinkedList<SLinkedList<ElectricityRecord>>> getRecords() {
-        return this.yearList;
-    }
-
-    public void setYearList(SLinkedList<SLinkedList<SLinkedList<ElectricityRecord>>> yearList) {
-        this.yearList = yearList;
-    }
-
-    public void printDataStructureWithData() {
-        for (int year = 0; year < yearList.length(); year++) {
-            System.out.println("Year " + year);
-            SLinkedList<SLinkedList<ElectricityRecord>> yearLists = yearList.get(year);
-            for (int month = 0; month < yearLists.length(); month++) {
-                System.out.println("\tMonth " + month);
-                SLinkedList<ElectricityRecord> monthList = yearLists.get(month);
-                for (int day = 0; day < monthList.length(); day++) {
-                    System.out.println("\t\tDay " + day);
-                    ElectricityRecord dayRecord = monthList.get(day);
-                    System.out.println("\t\t\tData: " + dayRecord.toString());
+        System.out.println("Printing the list of records");
+        for (Year record : records) {
+            // System.out.print(record + "/");
+            for (Month month : record.getMonthList()) {
+                // System.out.print(month + "/");
+                for (Day day : month.getDays()) {
+                    System.out.print(day);
                 }
             }
         }
