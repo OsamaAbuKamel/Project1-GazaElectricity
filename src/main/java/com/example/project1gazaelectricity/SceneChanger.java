@@ -5,17 +5,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class SceneChanger {
-
     private static Stage mainStage;
-    
+
     public static void setMainStage(Stage stage) {
         mainStage = stage;
     }
 
-    public static void changeScene(Parent scene) {
-        Scene mainScene = new Scene(scene,1120,720);
-        mainStage.setScene(mainScene);
-        mainStage.sizeToScene();  
-        mainStage.centerOnScreen();
+    public static void changeScene(Parent parent) {
+        Scene scene = new Scene(parent,1400,820);
+        mainStage.setScene(scene);
+        
     }
 }

@@ -1,0 +1,10 @@
+
+\
+java:S1192_"FDefine a constant instead of duplicating this literal "Error" 5 times.(Î¥¥’
+W
+java:S4973g"<Strings and Boxed types should be compared using "equals()".(£Øî´øÿÿÿÿ
+W
+java:S4973k"<Strings and Boxed types should be compared using "equals()".(ÄÜï¬ýÿÿÿÿ
+R
+java:S4973o"<Strings and Boxed types should be compared using "equals()".(‘‹õ
+W	java:S125™"<This block of commented-out lines of code should be removed.(â™•ˆúÿÿÿÿ

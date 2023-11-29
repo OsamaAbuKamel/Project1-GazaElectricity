@@ -1,7 +1,5 @@
 package com.example.project1gazaelectricity;
 
-import java.util.Calendar;
-
 public class Statistics {
     private RecordList records;
 
@@ -10,69 +8,79 @@ public class Statistics {
     }
 
     public double getStatisticForDay(int day, ElectricityType electricityType, StatisticType type) {
-        double total = 0;
-        double count = 0;
-        double max = 0;
-        double min = 0;
-        for (Year year : records.getRecords()) {
-            for (Month month : year.getMonthList()) {
-                for (Day days : month.getDays()) {
-                    if (days.getRecord().getDate().get(Calendar.DAY_OF_MONTH) == day) {
-                        double recordValue = getRecord(electricityType, days.getRecord());
-                        total += recordValue;
-                        count++;
-                        max = Math.max(max, recordValue);
-                        min = Math.min(min, recordValue);
+        if (day < 1 || day > 31) {
+            throw new IllegalArgumentException("Day must be between 1 and 31");
+        } else {
+            double total = 0;
+            double count = 0;
+            double max = 0;
+            double min = Double.MAX_VALUE;
+                        SLinkedList<Year> yearList = records.getRecords();
+
+            for (Year year : yearList) {
+                for (Month month : year.getMonthList()) {
+                    for (Day days : month.getDays()) {
+                        if (days.getRecord().getDate().getDayOfMonth() == day) {
+                            double recordValue = getRecord(electricityType, days.getRecord());
+                            total += recordValue;
+                            count++;
+                            max = Math.max(max, recordValue);
+                            min = Math.min(min, recordValue);
+                        }
                     }
-
                 }
-
             }
+            return calcStatistic(type, total, count, max, min);
         }
-
-        return calcStatistic(type, total, count, max, min);
     }
 
     public double getStatisticForMonth(int month, ElectricityType electricityType, StatisticType type) {
-        double total = 0;
-        double count = 0;
-        double max = 0;
-        double min = 0;
-        for (Year year : records.getRecords()) {
-            for (Month months : year.getMonthList()) {
-                if (months.getMonth() == month) {
-                    for (Day days : months.getDays()) {
-                        double recordValue = getRecord(electricityType, days.getRecord());
-                        total += recordValue;
-                        count++;
-                        max = Math.max(max, recordValue);
-                        min = Math.min(min, recordValue);
+        if (month < 1 || month > 12) {
+            throw new IllegalArgumentException("Month must be between 1 and 12");
+        } else {
+            double total = 0;
+            double count = 0;
+            double max = 0;
+            double min = Double.MAX_VALUE;
+            SLinkedList<Year> yearList = records.getRecords();
+            for (Year year : yearList) {
+                for (Month months : year.getMonthList()) {
+                    if (months.getMonth() == month) {
+                        for (Day days : months.getDays()) {
+                            double recordValue = getRecord(electricityType, days.getRecord());
+                            total += recordValue;
+                            count++;
+                            max = Math.max(max, recordValue);
+                            min = Math.min(min, recordValue);
+                        }
                     }
                 }
             }
+            return calcStatistic(type, total, count, max, min);
         }
-        return calcStatistic(type, total, count, max, min);
     }
 
     public double getStatisticForYear(int year, ElectricityType electricityType, StatisticType type) {
-        double total = 0;
-        double count = 0;
-        double max = 0;
-        double min = 0;
-        for (Year years : records.getRecords()) {
-            if (years.getYear() == year) {
-                for (Month months : years.getMonthList()) {
-                    for (Day records : months.getDays()) {
-                        double recordValue = getRecord(electricityType, records.getRecord());
-                        total += recordValue;
-                        count++;
-                        max = Math.max(max, recordValue);
-                        min = Math.min(min, recordValue);
-                    }
+        if (year < 0) {
+            throw new IllegalArgumentException("Year cannot be negative");
+        } else {
+            double total = 0;
+            double count = 0;
+            double max = 0;
+            double min = Double.MAX_VALUE;
+            Year yearList = records.getYear(year);
+            SLinkedList<Month> monthList = yearList.getMonthList();
+            for (Month months : monthList) {
+                for (Day dayList : months.getDays()) {
+                    double recordValue = getRecord(electricityType, dayList.getRecord());
+                    total += recordValue;
+                    count++;
+                    max = Math.max(max, recordValue);
+                    min = Math.min(min, recordValue);
                 }
             }
+            return calcStatistic(type, total, count, max, min);
         }
-        return calcStatistic(type, total, count, max, min);
     }
 
     private double calcStatistic(StatisticType type, double total, double count, double max, double min) {

@@ -1,10 +1,8 @@
 package com.example.project1gazaelectricity;
 
 import java.io.File;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -14,50 +12,47 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 public class MainScreen extends BorderPane {
     private RecordList list;
     private Button btnUpload = new Button();
-    private Button btnManagement = new Button("Management");
-    private Button btnStatistics = new Button("Statistics");
-    private Button btnSave = new Button();
+    private Button btnManagement = new Button("MANAGEMENT");
+    private Button btnStatistics = new Button("STATISTICS");
+    private Button btnSave = new Button("SAVE FILE");
     private FileChooser chooser = new FileChooser();
     private HBox hBox = new HBox();
-    private Scene scene;
     private Image gifImageUpload = new Image(
-            "C:\\Users\\osama\\repos\\Project1-GazaElectricity\\src\\main\\resources\\com\\example\\project1gazaelectricity\\upload.gif");
-    private Image gifImageDownload = new Image(
-            "C:\\Users\\osama\\repos\\Project1-GazaElectricity\\src\\main\\resources\\com\\example\\project1gazaelectricity\\download.gif");
+            "C:\\Users\\osama\\repos\\Project1-GazaElectricity\\src\\main\\resources\\com\\example\\project1gazaelectricity\\system-solid-49-upload-file (1).gif");
     private ImageView uploadImage = new ImageView(gifImageUpload);
-    private ImageView downloadImage = new ImageView(gifImageDownload);
     private Tooltip toolTip = new Tooltip("Upload File");
+
     public MainScreen(RecordList list) {
-        this.list=list;
+        this.list = list;
+        setStyle("-fx-background-color:#ffffff");
         toolTip.setTextAlignment(TextAlignment.LEFT);
-        btnUpload.setTooltip(toolTip);
+        // btnUpload.setTooltip(toolTip);
+        btnManagement.setTooltip(toolTip);
         style();
         handle(list);
         hBox.getChildren().addAll(btnUpload, btnManagement, btnStatistics, btnSave);
         setBottom(hBox);
     }
-      private void style() {
-        hBox.setPadding(new Insets(24));
+
+    private void style() {
+        hBox.setPadding(new Insets(16));
         hBox.setAlignment(Pos.CENTER);
-        hBox.setSpacing(24);
+        hBox.setSpacing(16);
         setPadding(new Insets(16));
-        uploadImage.setFitHeight(50);
-        uploadImage.setFitWidth(50);
-        downloadImage.setFitHeight(50);
-        downloadImage.setFitWidth(50);
+        uploadImage.setFitHeight(60);
+        uploadImage.setFitWidth(60);
         btnUpload.setGraphic(uploadImage);
-        btnSave.setGraphic(downloadImage);
         btnUpload.setStyle("-fx-background-color: transparent;");
-        btnSave.setStyle("-fx-background-color: transparent;");
-        btnManagement.setStyle("-fx-background-color: #ffffff;");
-        btnStatistics.setStyle("-fx-background-color: #ffffff;");
-        btnManagement.setPrefSize(100, 50);
-        btnStatistics.setPrefSize(100, 50);
+        btnSave.setStyle("-fx-background-color:#111330;-fx-text-fill:#ffffff");
+        btnManagement.setStyle("-fx-background-color: #111330;-fx-text-fill:#ffffff");
+        btnStatistics.setStyle("-fx-background-color: #111330;-fx-text-fill:#ffffff");
+        btnManagement.setPrefSize(120, 60);
+        btnStatistics.setPrefSize(120, 60);
+        btnSave.setPrefSize(120, 60);
     }
 
     private void handle(RecordList list) {
@@ -74,20 +69,18 @@ public class MainScreen extends BorderPane {
                 String fileName = file.getAbsolutePath();
                 list.loadFile(fileName);
             }
-            if (file != null) {
-                // disable(true);
-            }
         });
-        btnManagement.setOnAction(e->{
-            SceneChanger.changeScene(new ManagementScreen(list)); 
+        btnManagement.setOnAction(e -> {
+            SceneChanger.changeScene(new ManagementScreen(list));
         });
-        btnStatistics.setOnAction(e->{
+        btnStatistics.setOnAction(e -> {
             SceneChanger.changeScene(new StatisticsScreen(list));
         });
         btnSave.setOnAction(e -> {
             SceneChanger.changeScene(new SaveScreen(list));
         });
     }
+
     private void alert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

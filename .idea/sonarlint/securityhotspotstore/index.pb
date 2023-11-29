@@ -15,5 +15,13 @@ w
 Gsrc/main/java/com/example/project1gazaelectricity/ManagementScreen.java,1\c\1cc63ca3fe5dfd6530695139ef52db2f20ea6107
 v
 Fsrc/main/java/com/example/project1gazaelectricity/ElectricityType.java,2\9\29ac9e34c31100192b9555f40e8adc0c0e9f18f7
+k
+;src/main/java/com/example/project1gazaelectricity/Test.java,9\a\9a3271f70c484af50ac573adc867a144736dd9ca
 q
-Asrc/main/java/com/example/project1gazaelectricity/MultiChart.java,7\e\7ef21b9167ee26bf6b2676c60e9fc9cea171e922
+Asrc/main/java/com/example/project1gazaelectricity/SaveScreen.java,0\d\0d5f6146150757d182616ff5661f4fb0caceca6c
+s
+Csrc/main/java/com/example/project1gazaelectricity/SceneChanger.java,3\4\348e449ab131115d4b50172eab3db5fdb700565e
+q
+Asrc/main/java/com/example/project1gazaelectricity/Statistics.java,1\1\11957e7e9b8240afeed7c76832dc3c60486578f4
+w
+Gsrc/main/java/com/example/project1gazaelectricity/StatisticsScreen.java,e\2\e28aa8199c07ead5caf615e8585d3d69015210c5

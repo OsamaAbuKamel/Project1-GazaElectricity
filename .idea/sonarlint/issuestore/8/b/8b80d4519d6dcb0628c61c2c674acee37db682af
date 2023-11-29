@@ -1,8 +1,3 @@
 
-]	java:S125+"<This block of commented-out lines of code should be removed.(–ÊºÇÿÿÿÿÿ8ÿÛäÓÀ1
-X	java:S1254"<This block of commented-out lines of code should be removed.(ò¬½«8´®áÓÀ1
-]	java:S125I"<This block of commented-out lines of code should be removed.(òãÂüÿÿÿÿ8¶®áÓÀ1
-N
-java:S1602L",Remove useless curly braces around statement(È…¯Üúÿÿÿÿ8·®áÓÀ1
-L
-java:S1144W"*Remove this unused private "alert" method.(´Ÿ§Úøÿÿÿÿ8Ã®áÓÀ1
+u
+java:S1450"SRemove the "list" field and declare it as a local variable in the relevant methods.(û÷÷Íûÿÿÿÿ8ú¹åÔÁ1

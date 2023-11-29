@@ -24,8 +24,7 @@ public class SaveScreen extends BorderPane {
         btnSave.setOnAction(e -> {
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
             FileChooser.ExtensionFilter extFilterTxt = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-                        chooser.getExtensionFilters().addAll(extFilterTxt, extFilter);
-
+            chooser.getExtensionFilters().addAll(extFilterTxt, extFilter);
             File file = chooser.showSaveDialog(null);
             if (file != null) {
                 String fileName = file.getAbsolutePath();
@@ -38,11 +37,12 @@ public class SaveScreen extends BorderPane {
         imageView.setFitHeight(40);
         imageView.setFitWidth(40);
         btnBack.setGraphic(imageView);
-        imageView1.setFitHeight(60);
-        imageView1.setFitWidth(60);
+        imageView1.setFitHeight(80);
+        imageView1.setFitWidth(80);
         btnSave.setGraphic(imageView1);
         btnBack.setStyle("-fx-background-color: transparent;");
         btnSave.setStyle("-fx-background-color: transparent;");
+        setStyle("-fx-background-color:#ffffff");
         setLeft(btnBack);
         setCenter(btnSave);
     }

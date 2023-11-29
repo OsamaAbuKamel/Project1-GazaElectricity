@@ -9,7 +9,7 @@ public class SLinkedList<T extends Comparable<T>> implements Iterable<T>, Compar
     public SLinkedList() {
         head = new Node<>(null);
     }
- 
+
     // This method inserts a new node with the given data at the head of the linked
     // list
     public void insertAtHead(T data) {
@@ -206,26 +206,19 @@ public class SLinkedList<T extends Comparable<T>> implements Iterable<T>, Compar
     }
 
     public T get(int index) {
-        // Check if index is negative
         if (index < 0) {
-            throw new IndexOutOfBoundsException("Index cannot be negative");
+            throw new IllegalArgumentException("Index cannot be negative: " + index);
         }
-        // Check if list is empty
-        if (isEmpty()) {
-            throw new IndexOutOfBoundsException("List is empty");
+        Node<T> current = head.getNext();
+        int currentIndex = 0;
+        while (current != null) {
+            if (currentIndex == index) {
+                return current.getData();
+            }
+            current = current.getNext();
+            currentIndex++;
         }
-        // Create a node to iterate through the list
-        Node<T> curr = head.getNext();
-        // Iterate through the list to get to the node at the given index
-        for (int i = 0; i < index; i++) {
-            curr = curr.getNext();
-        }
-        // Check if the index is greater than the size of the list
-        if (curr == null) {
-            throw new IndexOutOfBoundsException("Index: " + index + " greater than list size");
-        }
-        // Return the data of the node at the given index
-        return curr.getData();
+        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + currentIndex);
     }
 
     public Node<T> getHead() {

@@ -1,34 +1,31 @@
 package com.example.project1gazaelectricity;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public class ElectricityRecord implements Comparable<ElectricityRecord> {
-    // Represents the date
-    private Calendar date;
-    // Represents the electricity supply from Israeli lines
+    private LocalDate date;
+    // the number of lines in Israel
     private double israeliLines;
-    // Represents the electricity supply from the Gaza power plant
+    // the power of the power plant in Gaza
     private double gazaPowerPlant;
-    // Represents the electricity supply from Egyptian lines
+    // the number of lines in Egypt
     private double egyptianLines;
-    // Represents the total electricity supply
+    // the total supply of electricity
     private double totalSupply;
-    // Represents the overall electricity demand
+    // the overall demand of electricity
     private double overallDemand;
-    // Represents the number of hours of power cuts per day
+    // the number of power cuts in a day
     private double powerCutsHoursDay;
-    // Represents the temperature
+    // temporary variable
     private double temp;
-
     // Constructor
     public ElectricityRecord() {
     }
 
-    public ElectricityRecord(Calendar date, double israeliLines, double gazaPowerPlant, double egyptianLines,
+    public ElectricityRecord(LocalDate date, double israeliLines, double gazaPowerPlant, double egyptianLines,
             double totalSupply,
             double overallDemand,
             double powerCutsHoursDay, double temp) {
-
         this.date = date;
         this.setIsraeliLines(israeliLines);
         this.setGazaPowerPlant(gazaPowerPlant);
@@ -39,19 +36,11 @@ public class ElectricityRecord implements Comparable<ElectricityRecord> {
         this.setTemp(temp);
     }
 
-    public Calendar getDate() {
+    public LocalDate getDate() {
         return this.date;
     }
 
-    public String getDateInfo() {
-        Calendar date = this.date;
-        int year = date.get(Calendar.YEAR);
-        int month = date.get(Calendar.MONTH) + 1; // Adjust month index for human-readable format
-        int day = date.get(Calendar.DAY_OF_MONTH);
-        return String.format("%d-%d-%d", year, month, day);
-    }
-    
-    public void setDate(Calendar date) {          
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -97,10 +86,8 @@ public class ElectricityRecord implements Comparable<ElectricityRecord> {
     public void setTotalSupply(double totalSupply) {
         if (totalSupply >= 0)
             this.totalSupply = totalSupply;
-
         else
             throw new IllegalArgumentException("Total Supply cannot be negative");
-
     }
 
     public double getOverallDemand() {
@@ -136,18 +123,11 @@ public class ElectricityRecord implements Comparable<ElectricityRecord> {
             throw new IllegalArgumentException("Temperature cannot be greater than 50");
     }
 
-    // @Override
-    // public String toString() {
-    //     return "," + israeliLines + "," + gazaPowerPlant + "," + egyptianLines + "," + totalSupply + "," + overallDemand
-    //             + "," + powerCutsHoursDay + "," + temp + "\n";
-    // }
     @Override
     public String toString() {
-    return
-    getDate().get(Calendar.YEAR)+"/"+getDate().get(Calendar.MONTH)+"/"+getDate().get(Calendar.DAY_OF_MONTH)+
-    "," + israeliLines + "," + gazaPowerPlant + "," + egyptianLines + "," +
-    totalSupply + "," + overallDemand + "," + powerCutsHoursDay + "," +
-    temp+"\n";
+        return getDate() + "," + israeliLines + "," + gazaPowerPlant + "," + egyptianLines + "," + totalSupply + ","
+                + overallDemand
+                + "," + powerCutsHoursDay + "," + temp + "\n";
     }
 
     @Override

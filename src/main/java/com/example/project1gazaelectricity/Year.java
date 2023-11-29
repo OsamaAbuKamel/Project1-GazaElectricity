@@ -4,6 +4,10 @@ public class Year implements Comparable<Year> {
     private int year;
     private SLinkedList<Month> monthList;
 
+    public Year() {
+        monthList = new SLinkedList<>();
+    }
+
     public Year(int year) {
         this.year = year;
         monthList = new SLinkedList<>();
@@ -17,8 +21,17 @@ public class Year implements Comparable<Year> {
         this.monthList.deleteSorted(month);
     }
 
+    public Month search(Month month) {
+        return monthList.search(month);
+    }
+
     public Month get(int index) {
-        return monthList.get(index);
+        for (Month month : monthList) {
+            if (month.getMonth() == index) {
+                return month;
+            }
+        }
+        return null;
     }
 
     public SLinkedList<Month> getMonthList() {
@@ -34,7 +47,7 @@ public class Year implements Comparable<Year> {
     }
 
     public String toString() {
-        return year + "";
+        return year + " " + monthList.toString();
     }
 
     @Override
