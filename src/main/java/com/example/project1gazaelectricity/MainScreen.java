@@ -22,7 +22,7 @@ public class MainScreen extends BorderPane {
     private FileChooser chooser = new FileChooser();
     private HBox hBox = new HBox();
     private Image gifImageUpload = new Image(
-            "C:\\Users\\osama\\repos\\Project1-GazaElectricity\\src\\main\\resources\\com\\example\\project1gazaelectricity\\system-solid-49-upload-file (1).gif");
+            "C:\\Users\\osama\\repos\\Project1-GazaElectricity\\src\\main\\resources\\com\\example\\project1gazaelectricity\\system-solid-49-upload-file.gif");
     private ImageView uploadImage = new ImageView(gifImageUpload);
     private Tooltip toolTip = new Tooltip("Upload File");
 
@@ -35,7 +35,7 @@ public class MainScreen extends BorderPane {
         style();
         handle(list);
         hBox.getChildren().addAll(btnUpload, btnManagement, btnStatistics, btnSave);
-        setBottom(hBox);
+        setCenter(hBox);
     }
 
     private void style() {

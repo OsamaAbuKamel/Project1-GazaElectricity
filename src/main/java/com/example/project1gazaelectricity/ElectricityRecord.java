@@ -1,8 +1,9 @@
 package com.example.project1gazaelectricity;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
-public class ElectricityRecord implements Comparable<ElectricityRecord> {
+public class ElectricityRecord implements Comparable<ElectricityRecord>, Cloneable {
     private LocalDate date;
     // the number of lines in Israel
     private double israeliLines;
@@ -18,6 +19,7 @@ public class ElectricityRecord implements Comparable<ElectricityRecord> {
     private double powerCutsHoursDay;
     // temporary variable
     private double temp;
+
     // Constructor
     public ElectricityRecord() {
     }
@@ -128,6 +130,26 @@ public class ElectricityRecord implements Comparable<ElectricityRecord> {
         return getDate() + "," + israeliLines + "," + gazaPowerPlant + "," + egyptianLines + "," + totalSupply + ","
                 + overallDemand
                 + "," + powerCutsHoursDay + "," + temp + "\n";
+    }
+
+    @Override
+    protected Object clone()
+            throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (o instanceof ElectricityRecord electricityRecord) {
+            return Objects.equals(date, electricityRecord.date) && israeliLines == electricityRecord.israeliLines
+                    && gazaPowerPlant == electricityRecord.gazaPowerPlant
+                    && egyptianLines == electricityRecord.egyptianLines && totalSupply == electricityRecord.totalSupply
+                    && overallDemand == electricityRecord.overallDemand
+                    && powerCutsHoursDay == electricityRecord.powerCutsHoursDay && temp == electricityRecord.temp;
+        }
+        return false;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.example.project1gazaelectricity;
 
-public class Year implements Comparable<Year> {
+public class Year implements Comparable<Year>, Cloneable {
     private int year;
     private SLinkedList<Month> monthList;
 
@@ -53,5 +53,21 @@ public class Year implements Comparable<Year> {
     @Override
     public int compareTo(Year o) {
         return Integer.compare(year, o.year);
+    }
+
+    @Override
+    protected Object clone()
+            throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (o instanceof Year year) {
+            return year.getYear() == this.getYear();
+        }
+        return false;
     }
 }

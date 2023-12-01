@@ -1,6 +1,6 @@
 package com.example.project1gazaelectricity;
 
-public class Day implements Comparable<Day> {
+public class Day implements Comparable<Day>, Cloneable {
     private int day;
     private ElectricityRecord record;
 
@@ -34,7 +34,23 @@ public class Day implements Comparable<Day> {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (o instanceof Day day) {
+            return day.getDay() == this.getDay();
+        }
+        return false;
+    }
+
+    @Override
+    protected Object clone()
+            throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
     public String toString() {
-        return  "" + getRecord();
+        return "" + getRecord();
     }
 }

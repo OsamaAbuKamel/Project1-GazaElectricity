@@ -1,14 +1,14 @@
 
 x
-java:S3065"bChange these chained min/max methods invocations, as final results will always be the lower bound.(ñ©ò…
+java:S3065O"bChange these chained min/max methods invocations, as final results will always be the lower bound.(ñ©ò…
 x
-java:S30653"bChange these chained min/max methods invocations, as final results will always be the lower bound.(ñ©ò…
+java:S3065"bChange these chained min/max methods invocations, as final results will always be the lower bound.(ñ©ò…
 x
-java:S3065K"bChange these chained min/max methods invocations, as final results will always be the lower bound.(ñ©ò…
+java:S30656"bChange these chained min/max methods invocations, as final results will always be the lower bound.(ñ©ò…
 h
 java:S3776
 "RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(¼ˆü 
 m
-java:S3776#"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(èéËşÿÿÿÿ
+java:S3776%"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(èéËşÿÿÿÿ
 U
-java:S6213b":Rename this variable to not match a restricted identifier.(¾¨ú¼øÿÿÿÿ
+java:S6213f":Rename this variable to not match a restricted identifier.(¾¨ú¼øÿÿÿÿ

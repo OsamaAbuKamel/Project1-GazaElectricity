@@ -10,7 +10,7 @@ import javafx.stage.FileChooser;
 public class SaveScreen extends BorderPane {
     private FileChooser chooser = new FileChooser();
     private Button btnSave = new Button();
-    private Button btnBack = new Button();
+    private Button btnBack = new Button("<");
     private Image gifImageDownload = new Image(
             "C:\\Users\\osama\\repos\\Project1-GazaElectricity\\src\\main\\resources\\com\\example\\project1gazaelectricity\\download.gif");
     private ImageView imageView1 = new ImageView(gifImageDownload);
@@ -36,11 +36,11 @@ public class SaveScreen extends BorderPane {
         });
         imageView.setFitHeight(40);
         imageView.setFitWidth(40);
-        btnBack.setGraphic(imageView);
+        // btnBack.setGraphic(imageView);
         imageView1.setFitHeight(80);
         imageView1.setFitWidth(80);
-        btnSave.setGraphic(imageView1);
-        btnBack.setStyle("-fx-background-color: transparent;");
+        // btnSave.setGraphic(imageView1);
+        btnBack.setStyle("-fx-background-color: transparent;-fx-font-size: 20px;");
         btnSave.setStyle("-fx-background-color: transparent;");
         setStyle("-fx-background-color:#ffffff");
         setLeft(btnBack);

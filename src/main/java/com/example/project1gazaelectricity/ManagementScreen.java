@@ -36,7 +36,10 @@ public class ManagementScreen extends BorderPane {
     private RecordList list;
 
     public ManagementScreen(RecordList list) {
-        getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        String fileName = "style.css";
+        if (fileName != null) {
+            getStylesheets().add(getClass().getResource(fileName).toExternalForm());
+        }
         this.list = list;
         style();
         handle();
