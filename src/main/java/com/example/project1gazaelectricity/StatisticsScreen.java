@@ -40,6 +40,7 @@ public class StatisticsScreen extends BorderPane {
     private ToggleGroup group = new ToggleGroup();
     private GridPane gridPane = new GridPane();
 
+    // Constructor
     public StatisticsScreen(RecordList list) {
         this.list = list;
         setStyle("-fx-background-color:#ffffff");
@@ -53,6 +54,7 @@ public class StatisticsScreen extends BorderPane {
         setCenter(box);
     }
 
+    // Initialize the screen
     private void initialize() {
         gridPane.add(rbTotal, 0, 0);
         gridPane.add(rbAvg, 1, 0);
@@ -72,7 +74,6 @@ public class StatisticsScreen extends BorderPane {
     }
 
     private LineChart<Number, Number> createChart() {
-        // Creating the X and Y axes
         // Set X-axis label based on the selected time unit
         String timeUnit = comboBox1.getValue();
         xAxis.setLabel(timeUnit);
@@ -87,12 +88,14 @@ public class StatisticsScreen extends BorderPane {
     }
 
     private void handle() {
+        // back button to main screen
         btnBack.setOnAction(e -> {
             clear();
             SceneChanger.changeScene(new MainScreen(list));
         });
         btnResult.setOnAction(e -> {
             try {
+                // Check if all inputs are empty
                 if (comboBox1.getValue() == null)
                     alert(Alert.AlertType.ERROR, "Error", "Please select a time unit");
                 else if (tfInput.getText().isEmpty())
@@ -102,6 +105,7 @@ public class StatisticsScreen extends BorderPane {
                 else if (group.getSelectedToggle() == null)
                     alert(Alert.AlertType.ERROR, "Error", "Please select a statistic type");
                 double value = 0;
+                // Get the value from the selected year,month or day
                 if (comboBox1.getValue() == "Day") {
                     value = statistics.getStatisticForDay(Integer.parseInt(tfInput.getText()),
                             comboBox.getValue(),
@@ -115,12 +119,17 @@ public class StatisticsScreen extends BorderPane {
                             comboBox.getValue(),
                             getType());
                 }
+                // Display the value in the text area
                 area.setText(String.valueOf(value));
+                // Check if the value is not null
                 if (comboBox.getValue() != null && comboBox1.getValue() != null) {
+                    // Set the title of the chart
                     lineChart.setTitle(comboBox.getValue() + " " + comboBox1.getValue() + " " + getType().toString());
                 }
+                // Add the value to the Line Chart
                 series.getData().add(new XYChart.Data<>(Integer.parseInt(tfInput.getText()), value));
             } catch (IllegalArgumentException ex) {
+                // Display Error
                 alert(Alert.AlertType.ERROR, "Error", ex.getMessage());
             }
         });

@@ -35,6 +35,7 @@ public class ManagementScreen extends BorderPane {
     private TableView<ElectricityRecord> tableView = new TableView<>();
     private RecordList list;
 
+    // Constructor
     public ManagementScreen(RecordList list) {
         String fileName = "style.css";
         if (fileName != null) {
@@ -48,6 +49,7 @@ public class ManagementScreen extends BorderPane {
         setLeft(vLeft);
     }
 
+    // Methods for initializing gridPane
     private GridPane initializeGridPane() {
         GridPane inputGrid = new GridPane();
         inputGrid.add(new Label("Date:"), 0, 0);
@@ -74,52 +76,79 @@ public class ManagementScreen extends BorderPane {
         return inputGrid;
     }
 
+    // add event handlers to buttons
     private void handle() {
         addBtn.setOnAction(e -> {
             try {
+                // Get the record from the list
                 ElectricityRecord newRecord = getRecord();
+                // Add the record to the list
                 list.add(newRecord);
+                // Update the table view
                 updateTableView();
+                // Clear the text fields
                 clear();
             } catch (IllegalArgumentException ex) {
+                // display error message
                 alert(AlertType.ERROR, "Error", ex.getMessage());
             } catch (NullPointerException ex) {
+                // display error message
                 alert(AlertType.ERROR, "Error", "Please enter date");
             }
         });
         updateBtn.setOnAction(e -> {
             try {
+                // Get the record from the list
                 ElectricityRecord updatedRecord = getRecord();
+                // Update the record in the list
                 list.update(updatedRecord);
+                // Update the table view
                 updateTableView();
+                // Clear the text fields
                 clear();
             } catch (IllegalArgumentException ex) {
+                // Show an error alert if the date is invalid
                 alert(AlertType.ERROR, "Error", ex.getMessage());
             } catch (NullPointerException ex) {
+                // Show an error alert if the date is not entered
                 alert(AlertType.ERROR, "Error", "Please enter date");
             }
         });
         deleteBtn.setOnAction(e -> {
             try {
-                list.remove(getRecord());
+                // Get the record from the list
+                ElectricityRecord deleteRecord = getRecord();
+                // remove the record from the list
+                list.remove(deleteRecord);
+                // update the table view
                 updateTableView();
+                // clear the text fields
                 clear();
             } catch (IllegalArgumentException ex) {
+                // show an error message
                 alert(AlertType.ERROR, "Error", ex.getMessage());
             } catch (NullPointerException ex) {
+                // show an error message
                 alert(AlertType.ERROR, "Error", "Please enter date");
             }
         });
         searchBtn.setOnAction(e -> {
             try {
+                // search for the record in the list
                 ElectricityRecord record = list.search(getDate());
+                // if the record is found
                 if (record != null) {
+                    // create an observable list of the record
                     ObservableList<ElectricityRecord> list1 = FXCollections.observableArrayList(record);
+                    // set the items of the table view to the observable list
                     tableView.setItems(list1);
                 } else
+                    // if no record is found, show a warning
                     alert(AlertType.WARNING, "Warning", "No record found for the given date");
+                // clear the text fields
                 clear();
             } catch (NullPointerException ex) {
+                // if the date is empty, show an error
                 alert(AlertType.ERROR, "Error", "Please enter date");
             }
         });
@@ -130,6 +159,7 @@ public class ManagementScreen extends BorderPane {
         });
     }
 
+    // Methods for initializing table
     private TableView<ElectricityRecord> initializeTable() {
         TableColumn<ElectricityRecord, LocalDate> dateCol = new TableColumn<>("Date");
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -161,6 +191,7 @@ public class ManagementScreen extends BorderPane {
         return tableView;
     }
 
+    // Methods for fill and update table
     private void updateTableView() {
         if (tableView != null) {
             tableView.getItems().clear();
@@ -174,10 +205,12 @@ public class ManagementScreen extends BorderPane {
         }
     }
 
+    // get date from date picker
     private LocalDate getDate() {
         return datePicker.getValue();
     }
 
+    // Methods for styling
     private void style() {
         setStyle("-fx-background-color:#ffffff");
         Image image = new Image(
@@ -195,6 +228,7 @@ public class ManagementScreen extends BorderPane {
         tableView.setMinWidth(880);
     }
 
+    // Methods for clear
     private void clear() {
         datePicker.setValue(null);
         israelInput.clear();
@@ -206,6 +240,7 @@ public class ManagementScreen extends BorderPane {
         tempInput.clear();
     }
 
+    // get records from text fields
     private ElectricityRecord getRecord() {
         double israeliLines = Double.parseDouble(israelInput.getText());
         double gazaPowerPlant = Double.parseDouble(gazaInput.getText());
@@ -226,11 +261,14 @@ public class ManagementScreen extends BorderPane {
         return record;
     }
 
+    // Methods for alert
     private void alert(Alert.AlertType type, String title, String message) {
+        // Create an alert with the given type, title, and message
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+        // Show the alert
         alert.show();
     }
 }
