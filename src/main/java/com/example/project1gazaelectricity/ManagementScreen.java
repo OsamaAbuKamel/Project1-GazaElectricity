@@ -11,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-// import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -141,7 +140,8 @@ public class ManagementScreen extends BorderPane {
                 // Show an error alert if the date is invalid
                 alert(AlertType.ERROR, "Error", ex.getMessage());
             } catch (NullPointerException ex) {
-                // Show an error alert if the
+                // Show an error alert if the date is not entered
+                alert(AlertType.ERROR, "Error", "Please enter date");
             }
         });
         searchBtn.setOnAction(e -> {
@@ -197,7 +197,7 @@ public class ManagementScreen extends BorderPane {
         return tableView;
     }
 
-    public void editTable(){
+    public void editTable() {
         israeliLinesCol.setCellFactory(
                 TextFieldTableCell.<ElectricityRecord, Double>forTableColumn(new DoubleStringConverter()));
         israeliLinesCol.setOnEditCommit(event -> {
