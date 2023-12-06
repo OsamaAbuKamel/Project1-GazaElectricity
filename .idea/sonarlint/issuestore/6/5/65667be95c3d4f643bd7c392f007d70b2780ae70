@@ -1,25 +1,0 @@
-
-[
-java:S1854"9Remove this useless assignment to local variable "date3".(ŸêÄŸşÿÿÿÿ8î®Ç„Â1
-[
-java:S1854"9Remove this useless assignment to local variable "file1".(ç£šìıÿÿÿÿ8¥ıÓÛ¿1
-Z
-java:S1854
-"8Remove this useless assignment to local variable "file".(‹œìüÿÿÿÿ8¥ıÓÛ¿1
-`
-java:S1854	">Remove this useless assignment to local variable "statistics".(ÏÔ¸ùÿÿÿÿÿ8ï®Ç„Â1
-Q
-java:S1481	"/Remove this unused "statistics" local variable.(ÏÔ¸ùÿÿÿÿÿ8ö®Ç„Â1
-K
-java:S1481
-")Remove this unused "file" local variable.(‹œìüÿÿÿÿ8©ıÓÛ¿1
-L
-java:S1481"*Remove this unused "file1" local variable.(ç£šìıÿÿÿÿ8«ıÓÛ¿1
-]	java:S125"<This block of commented-out lines of code should be removed.(‡ïÀøÿÿÿÿ8¬ıÓÛ¿1
-L
-java:S1481"*Remove this unused "date3" local variable.(ŸêÄŸşÿÿÿÿ8ù®Ç„Â1
-G	java:S106"+Replace this use of System.out by a logger.(ÒÕÁº8ü®Ç„Â1
-L	java:S106 "+Replace this use of System.out by a logger.(Ïíõšûÿÿÿÿ8ìİçÔÁ1
-L	java:S106#"+Replace this use of System.out by a logger.(Ïíõšûÿÿÿÿ8ı®Ç„Â1
-G	java:S106$"+Replace this use of System.out by a logger.(“œôã8ı®Ç„Â1
-]	java:S125&"<This block of commented-out lines of code should be removed.(óö£µıÿÿÿÿ8€¯Ç„Â1

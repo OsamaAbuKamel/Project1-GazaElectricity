@@ -1,0 +1,11 @@
+
+o
+java:S2293	"YReplace the type specification in this constructor call with the diamond operator ("<>").(çÊÞâ
+/
+java:S1700"Rename field "month"(º¶À˜ÿÿÿÿÿ
+n
+java:S29753"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(ûÝ‹¬ÿÿÿÿÿ
+C
+java:S11853"(Remove this method to simply inherit it.(ûÝ‹¬ÿÿÿÿÿ
+S
+java:S1117<"8Rename "month" which hides the field declared at line 4.(É½ŽÏÿÿÿÿÿ

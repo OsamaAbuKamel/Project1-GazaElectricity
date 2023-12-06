@@ -4,15 +4,24 @@ import java.time.LocalDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+// import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.converter.DoubleStringConverter;
 
 public class ManagementScreen extends BorderPane {
     // Input Fields
@@ -21,7 +30,6 @@ public class ManagementScreen extends BorderPane {
     private TextField egyptInput = new TextField();
     private TextField gazaInput = new TextField();
     private TextField overallDemandInput = new TextField();
-    private TextField totalInput = new TextField();
     private TextField powerCutsHoursDayInput = new TextField();
     private TextField tempInput = new TextField();
     // Buttons
@@ -34,6 +42,14 @@ public class ManagementScreen extends BorderPane {
     private VBox vLeft = new VBox();
     private TableView<ElectricityRecord> tableView = new TableView<>();
     private RecordList list;
+    private TableColumn<ElectricityRecord, LocalDate> dateCol = new TableColumn<>("Date");
+    private TableColumn<ElectricityRecord, Double> israeliLinesCol = new TableColumn<>("Israeli Lines");
+    private TableColumn<ElectricityRecord, Double> gazaPlantCol = new TableColumn<>("Gaza Plant");
+    private TableColumn<ElectricityRecord, Double> egyptianLinesCol = new TableColumn<>("Egyptian Lines");
+    private TableColumn<ElectricityRecord, Double> totalSupplyCol = new TableColumn<>("Total Supply");
+    private TableColumn<ElectricityRecord, Double> overallDemandCol = new TableColumn<>("Overall Demand");
+    private TableColumn<ElectricityRecord, Double> powerCutsCol = new TableColumn<>("Power Cuts Hours Day");
+    private TableColumn<ElectricityRecord, Double> tempCol = new TableColumn<>("Temp");
 
     // Constructor
     public ManagementScreen(RecordList list) {
@@ -60,16 +76,14 @@ public class ManagementScreen extends BorderPane {
         inputGrid.add(egyptInput, 1, 2);
         inputGrid.add(new Label("Egypt Lines:"), 0, 3);
         inputGrid.add(gazaInput, 1, 3);
-        inputGrid.add(new Label("Total Supply:"), 0, 4);
-        inputGrid.add(totalInput, 1, 4);
-        inputGrid.add(new Label("Over All Demand:"), 0, 5);
-        inputGrid.add(overallDemandInput, 1, 5);
-        inputGrid.add(new Label("Power Cuts:"), 0, 6);
-        inputGrid.add(powerCutsHoursDayInput, 1, 6);
-        inputGrid.add(new Label("Temp:"), 0, 7);
-        inputGrid.add(tempInput, 1, 7);
+        inputGrid.add(new Label("Over All Demand:"), 0, 4);
+        inputGrid.add(overallDemandInput, 1, 4);
+        inputGrid.add(new Label("Power Cuts:"), 0, 5);
+        inputGrid.add(powerCutsHoursDayInput, 1, 5);
+        inputGrid.add(new Label("Temp:"), 0, 6);
+        inputGrid.add(tempInput, 1, 6);
         buttonBox.getChildren().addAll(addBtn, updateBtn, deleteBtn, searchBtn);
-        inputGrid.add(buttonBox, 1, 8);
+        inputGrid.add(buttonBox, 1, 7);
         inputGrid.setPadding(new Insets(16));
         inputGrid.setVgap(8);
         inputGrid.setHgap(8);
@@ -104,6 +118,7 @@ public class ManagementScreen extends BorderPane {
                 list.update(updatedRecord);
                 // Update the table view
                 updateTableView();
+                tableView.setEditable(true);
                 // Clear the text fields
                 clear();
             } catch (IllegalArgumentException ex) {
@@ -116,20 +131,17 @@ public class ManagementScreen extends BorderPane {
         });
         deleteBtn.setOnAction(e -> {
             try {
-                // Get the record from the list
-                ElectricityRecord deleteRecord = getRecord();
                 // remove the record from the list
-                list.remove(deleteRecord);
+                list.remove(getDate());
                 // update the table view
                 updateTableView();
                 // clear the text fields
                 clear();
             } catch (IllegalArgumentException ex) {
-                // show an error message
+                // Show an error alert if the date is invalid
                 alert(AlertType.ERROR, "Error", ex.getMessage());
             } catch (NullPointerException ex) {
-                // show an error message
-                alert(AlertType.ERROR, "Error", "Please enter date");
+                // Show an error alert if the
             }
         });
         searchBtn.setOnAction(e -> {
@@ -161,21 +173,13 @@ public class ManagementScreen extends BorderPane {
 
     // Methods for initializing table
     private TableView<ElectricityRecord> initializeTable() {
-        TableColumn<ElectricityRecord, LocalDate> dateCol = new TableColumn<>("Date");
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
-        TableColumn<ElectricityRecord, Double> israeliLinesCol = new TableColumn<>("Israeli Lines");
         israeliLinesCol.setCellValueFactory(new PropertyValueFactory<>("israeliLines"));
-        TableColumn<ElectricityRecord, Double> gazaPlantCol = new TableColumn<>("Gaza Plant");
         gazaPlantCol.setCellValueFactory(new PropertyValueFactory<>("gazaPowerPlant"));
-        TableColumn<ElectricityRecord, Double> egyptianLinesCol = new TableColumn<>("Egyptian Lines");
         egyptianLinesCol.setCellValueFactory(new PropertyValueFactory<>("egyptianLines"));
-        TableColumn<ElectricityRecord, Double> totalSupplyCol = new TableColumn<>("Total Supply");
         totalSupplyCol.setCellValueFactory(new PropertyValueFactory<>("totalSupply"));
-        TableColumn<ElectricityRecord, Double> overallDemandCol = new TableColumn<>("Overall Demand");
         overallDemandCol.setCellValueFactory(new PropertyValueFactory<>("overallDemand"));
-        TableColumn<ElectricityRecord, Double> powerCutsCol = new TableColumn<>("Power Cuts Hours Day");
         powerCutsCol.setCellValueFactory(new PropertyValueFactory<>("powerCutsHoursDay"));
-        TableColumn<ElectricityRecord, Double> tempCol = new TableColumn<>("Temp");
         tempCol.setCellValueFactory(new PropertyValueFactory<>("temp"));
         tableView.getColumns().addAll(dateCol, israeliLinesCol, gazaPlantCol,
                 egyptianLinesCol, totalSupplyCol, overallDemandCol, powerCutsCol, tempCol);
@@ -187,8 +191,67 @@ public class ManagementScreen extends BorderPane {
         overallDemandCol.prefWidthProperty().bind(tableView.widthProperty().divide(8));
         powerCutsCol.prefWidthProperty().bind(tableView.widthProperty().divide(8));
         tempCol.prefWidthProperty().bind(tableView.widthProperty().divide(8));
+        tableView.setEditable(true);
         updateTableView();
+        editTable();
         return tableView;
+    }
+
+    public void editTable(){
+        israeliLinesCol.setCellFactory(
+                TextFieldTableCell.<ElectricityRecord, Double>forTableColumn(new DoubleStringConverter()));
+        israeliLinesCol.setOnEditCommit(event -> {
+            Double newValue = event.getNewValue();
+            if (newValue != null) {
+                ElectricityRecord record = event.getRowValue();
+                record.setIsraeliLines(newValue);
+            }
+        });
+        gazaPlantCol.setCellFactory(
+                TextFieldTableCell.<ElectricityRecord, Double>forTableColumn(new DoubleStringConverter()));
+        gazaPlantCol.setOnEditCommit(event -> {
+            Double newValue = event.getNewValue();
+            if (newValue != null) {
+                ElectricityRecord record = event.getRowValue();
+                record.setGazaPowerPlant(newValue);
+            }
+        });
+        egyptianLinesCol.setCellFactory(
+                TextFieldTableCell.<ElectricityRecord, Double>forTableColumn(new DoubleStringConverter()));
+        egyptianLinesCol.setOnEditCommit(event -> {
+            Double newValue = event.getNewValue();
+            if (newValue != null) {
+                ElectricityRecord record = event.getRowValue();
+                record.setEgyptianLines(newValue);
+            }
+        });
+        overallDemandCol.setCellFactory(
+                TextFieldTableCell.<ElectricityRecord, Double>forTableColumn(new DoubleStringConverter()));
+        overallDemandCol.setOnEditCommit(event -> {
+            Double newValue = event.getNewValue();
+            if (newValue != null) {
+                ElectricityRecord record = event.getRowValue();
+                record.setOverallDemand(newValue);
+            }
+        });
+        powerCutsCol.setCellFactory(
+                TextFieldTableCell.<ElectricityRecord, Double>forTableColumn(new DoubleStringConverter()));
+        powerCutsCol.setOnEditCommit(event -> {
+            Double newValue = event.getNewValue();
+            if (newValue != null) {
+                ElectricityRecord record = event.getRowValue();
+                record.setPowerCutsHoursDay(newValue);
+            }
+        });
+        tempCol.setCellFactory(
+                TextFieldTableCell.<ElectricityRecord, Double>forTableColumn(new DoubleStringConverter()));
+        tempCol.setOnEditCommit(event -> {
+            Double newValue = event.getNewValue();
+            if (newValue != null) {
+                ElectricityRecord record = event.getRowValue();
+                record.setTemp(newValue);
+            }
+        });
     }
 
     // Methods for fill and update table
@@ -234,7 +297,6 @@ public class ManagementScreen extends BorderPane {
         israelInput.clear();
         gazaInput.clear();
         egyptInput.clear();
-        totalInput.clear();
         overallDemandInput.clear();
         powerCutsHoursDayInput.clear();
         tempInput.clear();
@@ -245,7 +307,6 @@ public class ManagementScreen extends BorderPane {
         double israeliLines = Double.parseDouble(israelInput.getText());
         double gazaPowerPlant = Double.parseDouble(gazaInput.getText());
         double egyptianLines = Double.parseDouble(egyptInput.getText());
-        double totalSupply = Double.parseDouble(totalInput.getText());
         double overallDemand = Double.parseDouble(overallDemandInput.getText());
         double powerCutsHoursDay = Double.parseDouble(powerCutsHoursDayInput.getText());
         double temp = Double.parseDouble(tempInput.getText());
@@ -254,7 +315,6 @@ public class ManagementScreen extends BorderPane {
                 israeliLines,
                 gazaPowerPlant,
                 egyptianLines,
-                totalSupply,
                 overallDemand,
                 powerCutsHoursDay,
                 temp);

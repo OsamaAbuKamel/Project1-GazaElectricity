@@ -25,14 +25,12 @@ public class ElectricityRecord implements Comparable<ElectricityRecord>, Cloneab
     }
 
     public ElectricityRecord(LocalDate date, double israeliLines, double gazaPowerPlant, double egyptianLines,
-            double totalSupply,
             double overallDemand,
             double powerCutsHoursDay, double temp) {
         this.date = date;
         this.setIsraeliLines(israeliLines);
         this.setGazaPowerPlant(gazaPowerPlant);
         this.setEgyptianLines(egyptianLines);
-        this.setTotalSupply(totalSupply);
         this.setOverallDemand(overallDemand);
         this.setPowerCutsHoursDay(powerCutsHoursDay);
         this.setTemp(temp);
@@ -82,14 +80,7 @@ public class ElectricityRecord implements Comparable<ElectricityRecord>, Cloneab
     }
 
     public double getTotalSupply() {
-        return this.totalSupply;
-    }
-
-    public void setTotalSupply(double totalSupply) {
-        if (totalSupply >= 0)
-            this.totalSupply = totalSupply;
-        else
-            throw new IllegalArgumentException("Total Supply cannot be negative");
+        return this.totalSupply = israeliLines+gazaPowerPlant+egyptianLines;
     }
 
     public double getOverallDemand() {
@@ -154,6 +145,6 @@ public class ElectricityRecord implements Comparable<ElectricityRecord>, Cloneab
 
     @Override
     public int compareTo(ElectricityRecord o) {
-        return Double.compare(israeliLines, o.israeliLines);
+        return this.date.compareTo(o.date) ;
     }
 }

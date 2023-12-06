@@ -1,17 +1,17 @@
 
 c
-java:S1192T"FDefine a constant instead of duplicating this literal "Error" 7 times.(Ôó›¬8ŒõÓ„Â1
+java:S1192]"FDefine a constant instead of duplicating this literal "Error" 7 times.(Ôó›¬8ŒõÓ„Â1
 o
-java:S1192V"RDefine a constant instead of duplicating this literal "Please enter date" 4 times.(úŸöÚ8ŒõÓ„Â1
+java:S1192`"RDefine a constant instead of duplicating this literal "Please enter date" 4 times.(úŸöÚ8ŒõÓ„Â1
 
-java:S1488Ø"^Immediately return this expression instead of assigning it to the temporary variable "record".(¥¬ËÕüÿÿÿÿ8õÓ„Â1
+java:S1488ü"^Immediately return this expression instead of assigning it to the temporary variable "record".(¥¬ËÕüÿÿÿÿ8õÓ„Â1
 d
-java:S2259ª"GA "NullPointerException" could be thrown; "tableView" is nullable here.(½ºÂX8§õÓ„Â1
+java:S2259Ê"GA "NullPointerException" could be thrown; "tableView" is nullable here.(½ºÂX8§õÓ„Â1
 T
-java:S2589("7Remove this expression which always evaluates to "true"(™ªøñ8äÚÕ„Â1
+java:S2589)"7Remove this expression which always evaluates to "true"(™ªøñ8äÚÕ„Â1
 t
-java:S3776L"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(œ ÿŒÿÿÿÿÿ8¶õÓ„Â1
-\
-java:S6213r":Rename this variable to not match a restricted identifier.(û•úÁùÿÿÿÿ8ºõÓ„Â1
+java:S3776P"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(œ ÿŒÿÿÿÿÿ8¶õÓ„Â1
 ]
-java:S6213Ø":Rename this variable to not match a restricted identifier.(¥¬ËÕüÿÿÿÿ8ÇõÓ„Â1
+java:S6213Š":Rename this variable to not match a restricted identifier.(û•úÁùÿÿÿÿ8ºõÓ„Â1
+]
+java:S6213ü":Rename this variable to not match a restricted identifier.(¥¬ËÕüÿÿÿÿ8ÇõÓ„Â1

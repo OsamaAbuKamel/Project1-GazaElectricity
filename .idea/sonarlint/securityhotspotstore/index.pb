@@ -3,8 +3,6 @@
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 x
 Hsrc/main/java/com/example/project1gazaelectricity/ElectricityRecord.java,a\6\a6e7cf86df84e1d9da6651731d0d3ab2eaaf931a
-k
-;src/main/java/com/example/project1gazaelectricity/Main.java,6\5\65667be95c3d4f643bd7c392f007d70b2780ae70
 r
 Bsrc/main/java/com/example/project1gazaelectricity/SLinkedList.java,4\f\4f2c42d66bdfa58348c60e8e44c76edbc8a7b54c
 k
@@ -15,8 +13,6 @@ w
 Gsrc/main/java/com/example/project1gazaelectricity/ManagementScreen.java,1\c\1cc63ca3fe5dfd6530695139ef52db2f20ea6107
 v
 Fsrc/main/java/com/example/project1gazaelectricity/ElectricityType.java,2\9\29ac9e34c31100192b9555f40e8adc0c0e9f18f7
-k
-;src/main/java/com/example/project1gazaelectricity/Test.java,9\a\9a3271f70c484af50ac573adc867a144736dd9ca
 q
 Asrc/main/java/com/example/project1gazaelectricity/SaveScreen.java,0\d\0d5f6146150757d182616ff5661f4fb0caceca6c
 s
@@ -25,3 +21,11 @@ q
 Asrc/main/java/com/example/project1gazaelectricity/Statistics.java,1\1\11957e7e9b8240afeed7c76832dc3c60486578f4
 w
 Gsrc/main/java/com/example/project1gazaelectricity/StatisticsScreen.java,e\2\e28aa8199c07ead5caf615e8585d3d69015210c5
+l
+<src/main/java/com/example/project1gazaelectricity/Month.java,9\d\9d7bfa622aba0f904ca07ac87c441e1469873be8
+q
+Asrc/main/java/com/example/project1gazaelectricity/RecordList.java,2\4\24b0de10363c5819cd7537f9e273889cfc5c3a35
+k
+;src/main/java/com/example/project1gazaelectricity/Year.java,e\d\edfba9ed9d6b032bda4986ebf63d7971879b2a08
+j
+:src/main/java/com/example/project1gazaelectricity/Day.java,0\8\0845f7bbda0c46abdadf0b19f9aaafdf8cfc5f0b

@@ -16,15 +16,6 @@ public class RecordList {
         records = new SLinkedList<>();
     }
 
-    // setter and getter
-    public SLinkedList<Year> getRecords() {
-        return this.records;
-    }
-
-    public void setRecords(SLinkedList<Year> records) {
-        this.records = records;
-    }
-
     public void add(ElectricityRecord record) {
         LocalDate date = record.getDate();
         // get year, month and day
@@ -60,8 +51,7 @@ public class RecordList {
         }
     }
 
-    public void remove(ElectricityRecord record) {
-        LocalDate date = record.getDate();
+    public void remove(LocalDate date) {
         // get year, month and day
         int year = date.getYear();
         int month = date.getMonthValue();
@@ -70,16 +60,12 @@ public class RecordList {
         ElectricityRecord record2 = search(date);
         // check if record exist
         if (record2 != null) {
-            // create a new objects of year, month and day
-            Day dayList = new Day(day, record);
-            Month monthList = new Month(month);
-            Year yearList = new Year(year);
-            // remove day fro month
-            monthList.removeDay(dayList);
-            // remove month from year
-            yearList.removeMonth(monthList);
-            // remove year from list
-            records.deleteSorted(yearList);
+            Year years = getYear(year);
+            Month months = years.get(month);
+            Day days = months.get(day);
+            if (days != null) {
+                months.removeDay(days);
+            }
         } else
             // if record not found
             throw new IllegalArgumentException("Record does not exist");
@@ -94,7 +80,6 @@ public class RecordList {
             record.setIsraeliLines(newRecord.getIsraeliLines());
             record.setGazaPowerPlant(newRecord.getGazaPowerPlant());
             record.setEgyptianLines(newRecord.getEgyptianLines());
-            record.setTotalSupply(newRecord.getTotalSupply());
             record.setOverallDemand(newRecord.getOverallDemand());
             record.setPowerCutsHoursDay(newRecord.getPowerCutsHoursDay());
             record.setTemp(newRecord.getTemp());
@@ -105,6 +90,7 @@ public class RecordList {
     }
 
     public ElectricityRecord search(LocalDate date) {
+
         // get year, month and day
         int year = date.getYear();
         int month = date.getMonthValue();
@@ -152,7 +138,6 @@ public class RecordList {
                         Double.parseDouble(parts[1].trim()),
                         Double.parseDouble(parts[2].trim()),
                         Double.parseDouble(parts[3].trim()),
-                        Double.parseDouble(parts[4].trim()),
                         Double.parseDouble(parts[5].trim()),
                         Double.parseDouble(parts[6].trim()),
                         Double.parseDouble(parts[7].trim()));
@@ -187,6 +172,16 @@ public class RecordList {
                 }
             }
         }
+    }
+
+
+    // setter and getter
+    public SLinkedList<Year> getRecords() {
+        return this.records;
+    }
+
+    public void setRecords(SLinkedList<Year> records) {
+        this.records = records;
     }
 
     @Override
