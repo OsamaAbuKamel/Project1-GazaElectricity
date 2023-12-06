@@ -1,5 +1,5 @@
-# Project1-GazaElectricity
 # Gaza Electricity Project
+![Management Screen]("C:\Users\osama\OneDrive\الصور\لقطات الشاشة\Screenshot 2023-12-06 190858.png")
 
 ## Overview
 
